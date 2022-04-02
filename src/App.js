@@ -1,58 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import { useEffect, useState } from 'react'
+import './App.css'
+import { Navigate, NavLink, Route, Routes } from 'react-router-dom'
+import Homepage from './pages/client/Homepage'
+import WebsiteLayout from "./pages/layouts/WebsiteLayout"
+import ContactPage from './pages/client/ContactPage'
+import AllProduct from './pages/client/AllProduct'
+import Dashboard from './pages/admin/Dashboard'
+import AdminLayout from './pages/layouts/AdminLayout'
+import AllDanhMuc from './pages/admin/DanhMuc/AllDanhMuc'
+import AddDanhMuc from './pages/admin/DanhMuc/AddDanhMuc'
+import EditDanhMuc from './pages/admin/DanhMuc/EditDanhMuc'
+import AllSanPham from './pages/admin/SanPham/AllSanPham'
+import AddSanPham from './pages/admin/SanPham/AddSanPham'
+import EditSanPham from './pages/admin/SanPham/EditSanPham'
+import ThongKe from './components/Admin/ThongKe/ThongKe'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
-  );
+    <>
+      <div className="container">
+        <Routes>
+          <Route path="/" element={ <WebsiteLayout /> }>
+            <Route index element={ <Homepage /> }></Route>
+            <Route path="contact" element={ <ContactPage /> }></Route>
+            <Route path="product" element={ <AllProduct /> }></Route>
+          </Route>
+          <Route path="/admin" element={ <AdminLayout /> }>
+            <Route index element={ <Navigate to="dashboard" /> }></Route>
+            <Route path="dashboard" element={ <ThongKe /> }></Route >
+            <Route path="category" element={ <AllDanhMuc /> }></Route >
+            <Route path="category/add" element={ <AddDanhMuc /> }></Route >
+            <Route path="category/:id/edit" element={ <EditDanhMuc /> }></Route >
+            <Route path="product" element={ <AllSanPham /> }></Route>
+            <Route path="product/add" element={ <AddSanPham /> }></Route >
+            <Route path="product/:id/edit" element={ < EditSanPham /> }></Route >
+          </Route>
+        </Routes>
+      </div>
+    </>
+  )
 }
 
-export default App;
+export default App
