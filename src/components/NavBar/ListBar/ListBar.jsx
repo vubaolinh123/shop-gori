@@ -1,8 +1,18 @@
+import { useEffect } from 'react';
 import { MdKeyboardArrowDown } from 'react-icons/md'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link, NavLink } from 'react-router-dom'
+import { getCategory } from '../../../features/Category/category';
 
 
 const ListBar = () => {
+    const dataCategory = useSelector(data => data.category.value);
+    const dispatch =  useDispatch()
+
+    useEffect(()=>{
+        dispatch(getCategory())
+    },[])
+
     return (
         <div className="flex mx-auto">
             <ul className="flex flex-row items-center justify-center ">
@@ -16,21 +26,11 @@ const ListBar = () => {
                     </NavLink>
                     <div className="listItem absolute bg-white z-50 top-[46px]">
                         <ul className="min-w-[180px]">
-                            <li className="border border-[#f6f6f6] text-[14px] text-[#252a2b]">
-                                <Link className="py-[8px] px-[18px] block" to="/product/season">GORI SEASON</Link>
+                            {dataCategory?.map((category)=>(
+                                <li key={category._id} className="border border-[#f6f6f6] text-[14px] text-[#252a2b]">
+                                <Link className="py-[8px] px-[18px] block" to={`/category/${category._id}`}>{category.name}</Link>
                             </li>
-                            <li className="border border-[#f6f6f6] text-[14px] text-[#252a2b]">
-                                <Link className="py-[8px] px-[18px] block" to="/product/basic">ÁO BASIC</Link>
-                            </li>
-                            <li className="border border-[#f6f6f6] text-[14px] text-[#252a2b]">
-                                <Link className="py-[8px] px-[18px] block" to="/product/oldskull">ÁO OLDSKULL</Link>
-                            </li>
-                            <li className="border border-[#f6f6f6] text-[14px] text-[#252a2b]">
-                                <Link className="py-[8px] px-[18px] block" to="/product/hoodie">ÁO HOODIE</Link>
-                            </li>
-                            <li className="border border-[#f6f6f6] text-[14px] text-[#252a2b]">
-                                <Link className="py-[8px] px-[18px] block" to="/product/tote">TÚI TOTE</Link>
-                            </li>
+                            ))}
                         </ul>
                     </div>
                 </li>

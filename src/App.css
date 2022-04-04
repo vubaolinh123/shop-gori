@@ -1,6 +1,6 @@
 
 body{
-    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: "Quicksand", sans-serif;
 }
 
 .nav-link.active {
@@ -41,4 +41,43 @@ body{
     height: 20px;
     line-height: 20px;
     border-radius: 50%;
+}
+
+.shadow{
+    box-shadow: 0px 0px 0px 1px #e7e7e7 inset;
+}
+
+.addCart{
+    z-index: 1;
+  position: relative;
+  outline: none;
+  border: 1px solid red;
+  /* border-left: 1px solid red;
+   border-top: 1px solid red;
+  border-bottom: 1px solid red; */
+}
+
+.addCart::before {
+  content: '';
+  z-index: -1;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: white;
+  transform-origin: center right;
+  transform: scaleX(0);
+  transition: transform 0.40s ease-in-out;
+}
+
+.addCart:hover {
+  cursor: pointer;
+  color: red;
+
+}
+
+.addCart:hover::before {
+  transform-origin: center left;
+  transform: scaleX(1);
 }

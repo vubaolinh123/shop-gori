@@ -14,6 +14,10 @@ import AllSanPham from './pages/admin/SanPham/AllSanPham'
 import AddSanPham from './pages/admin/SanPham/AddSanPham'
 import EditSanPham from './pages/admin/SanPham/EditSanPham'
 import ThongKe from './components/Admin/ThongKe/ThongKe'
+import DetailProduct from './components/DetailProducts/DetailProduct'
+import Register from './components/Auth/Register'
+import ProInCate from './components/Category/ProInCate'
+
 
 function App() {
   return (
@@ -24,6 +28,10 @@ function App() {
             <Route index element={ <Homepage /> }></Route>
             <Route path="contact" element={ <ContactPage /> }></Route>
             <Route path="product" element={ <AllProduct /> }></Route>
+            <Route path="product/:id" element={ <DetailProduct /> }></Route>
+            <Route path="category/:id" element={ <ProInCate /> }></Route>
+            <Route path="register" element={ <Register /> }></Route>
+
           </Route>
           <Route path="/admin" element={ <AdminLayout /> }>
             <Route index element={ <Navigate to="dashboard" /> }></Route>

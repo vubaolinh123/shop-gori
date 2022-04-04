@@ -1,16 +1,28 @@
 import { BsSearch } from 'react-icons/bs'
 import { FaRegUser } from 'react-icons/fa'
 import { BsCart2 } from 'react-icons/bs'
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
+import { signin } from '../../../features/User/userSlice'
 
 
 
 const IconBar = () => {
-
     const [openSearch, setOpenSearch] = useState(false)
     const [openCart, setOpenCart] = useState(false)
     const [openLogin, setOpenLogin] = useState(false)
+    // const [isUser, setisUser] = useState(false)
+    const [openInfoUser, setOpenInfoUser] = useState(false)
+    const {register, handleSubmit, formState } = useForm();
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    
+    const onSubmit = (data) => {
+        dispatch(signin(data))
+        setOpenLogin(false)
+    }
 
     const handleSearch = () => {
         if (!openSearch) {
@@ -39,7 +51,18 @@ const IconBar = () => {
 
     const handleLogin = () => {
 
-        if (!openLogin) {
+        if(localStorage.getItem('user')){
+           if (!openInfoUser) {
+            setOpenInfoUser(true)
+        } if (openSearch || openCart || openLogin) {
+            setOpenSearch(false)
+            setOpenCart(false)
+            setOpenLogin(false)
+        } else if (openInfoUser) {
+            setOpenInfoUser(false)
+        }
+        }else{
+            if (!openLogin && !localStorage.getItem('user')) {
             setOpenLogin(true)
         } if (openSearch || openCart) {
             setOpenSearch(false)
@@ -47,7 +70,17 @@ const IconBar = () => {
         } else if (openLogin) {
             setOpenLogin(false)
         }
+        }
     }
+
+    const Logout = ()=>{
+        console.log("Hello");
+        if(localStorage.getItem('user')){
+            localStorage.removeItem('user');
+            setOpenInfoUser(false)
+        }
+    }
+
 
 
     return (
@@ -96,7 +129,6 @@ const IconBar = () => {
                 <div>
                     <FaRegUser size="22px" onClick={ handleLogin } className="mx-[10px] cursor-pointer font-light color-[#252a2b]" />
                     { openLogin && (
-
                         <div className="absolute shadow-md color-[#fff] top-[70px] w-[420px] right-[178px] transition-all z-40 bg-white">
                             <div className="p-[20px] w-full">
                                 <div className="block w-full">
@@ -104,17 +136,17 @@ const IconBar = () => {
                                     <p className="text-center text-[14px] text-[#a9b1b6] border-b-[1px] pb-[10px]">Nhập email và mật khẩu của bạn:</p>
                                     <div className="w-full ">
                                         <div className="flex flex-col justify-center items-center py-[20px] border-b-[1px] border-solid border-[]">
-                                            <form action="" className="w-full">
+                                            <form action="" className="w-full" onSubmit={handleSubmit(onSubmit)}>
                                                 <div className="mb-[10px]">
-                                                    <input type="text" placeholder="Email" className="px-[10px] py-[10px] w-full border solid border-[#d4d6d8] outline-none" />
+                                                    <input type="text" {...register('email',{required: true})} placeholder="Email" className="px-[10px] py-[10px] w-full border solid border-[#d4d6d8] outline-none" />
                                                 </div>
                                                 <div className="mb-[10px]">
-                                                    <input type="password" placeholder="Mật khẩu" className="px-[10px] py-[10px] w-full border solid border-[#d4d6d8] outline-none" />
+                                                    <input type="password"  {...register('password',{required: true})}  placeholder="Mật khẩu" className="px-[10px] py-[10px] w-full border solid border-[#d4d6d8] outline-none" />
                                                 </div>
                                                 <button className="inline-block text-center bg-[#2962ff] text-white w-full py-[12px] my-[15px]">ĐĂNG NHẬP</button>
                                             </form>
                                             <p className="block text-[14px] text-[#a9b1b6]">Khách hàng mới?
-                                                <Link to="" className="text-[#337ab7]"> Tạo tài khoản</Link>
+                                                <Link to="/register" className="text-[#337ab7]"> Tạo tài khoản</Link>
                                             </p>
                                             <p className="block  text-[14px] text-[#a9b1b6]">Quên mật khẩu?
                                                 <Link to="" className="text-[#337ab7]"> Khôi phục mật khẩu</Link>
@@ -126,6 +158,23 @@ const IconBar = () => {
                         </div>
 
                     ) }
+
+                        { openInfoUser && (
+                        <div className="absolute shadow-md color-[#fff] top-[70px] w-[300px] right-[178px] transition-all z-40 bg-white">
+                            <div className="p-[20px] w-full">
+                                <div className="block w-full">
+                                    <p className="text-center text-[18px] color-[#000] border-b-[1px] border-solid pb-[5px]">THÔNG TIN TÀI KHOẢN</p>
+                                    <span className="font-bold text-[15px] my-[10px] block">{  localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')).user.name : "None" }</span>
+                                    <ul className="list-disc mx-[20px]">
+                                        <li className=""><Link to="/">Tài khoản của tôi</Link></li>
+                                        <li className=""><button onClick={()=>Logout()}>Đăng xuất</button></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    ) }
+
                 </div>
                 <div>
                     <div className="relative">
