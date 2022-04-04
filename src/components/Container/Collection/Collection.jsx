@@ -34,7 +34,7 @@ const Collection = () => {
                                         transition-all
                                         duration-300
                                     ">
-                                        <Link className="py-[6px] px-[28px] block" to="/product/oldskull">
+                                        <Link className="py-[6px] px-[28px] block" to="/product">
                                             XEM NGAY
                                         </Link>
                                     </button>
@@ -63,7 +63,7 @@ const Collection = () => {
                                         transition-all
                                         duration-300
                                     ">
-                                        <Link className="py-[6px] px-[26px] block" to="/product/basic">
+                                        <Link className="py-[6px] px-[26px] block" to="/product">
                                             XEM NGAY
                                         </Link>
                                     </button>
@@ -92,7 +92,7 @@ const Collection = () => {
                                         transition-all
                                         duration-300
                                     ">
-                                        <Link className="py-[6px] px-[26px] block" to="/product/tote">
+                                        <Link className="py-[6px] px-[26px] block" to="/product">
                                             XEM NGAY
                                         </Link>
                                     </button>

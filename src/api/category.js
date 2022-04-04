@@ -6,7 +6,7 @@ export const list = () => {
     return instance.get(url);
 }
 export const remove = (id) => {
-    const url = `/products/${id}`;
+    const url = `/categoryPro/${id}`;
     return instance.delete(url);
 }
 

@@ -1,7 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { getCategory, removeCategory } from '../../../features/Category/category';
 
 const ListDanhMuc = () => {
+    const Category = useSelector(data => data.category.value);
+    const dispatch = useDispatch();
+
+    useEffect(()=>{
+        dispatch(getCategory());
+    },[Category])
+
+    const onDelete = (id) =>{
+        const comfirm = window.confirm("Bạn có muốn xóa không ?");
+        if(comfirm){
+            dispatch(removeCategory(id))
+        }
+    }
+
     return (
         <div>
             <header className="bg-white shadow">
@@ -35,16 +51,19 @@ const ListDanhMuc = () => {
                                         </thead>
                                         <tbody className="bg-white divide-y divide-gray-200">
 
-                                            <tr>
-                                                <td className="px-6 py-4 whitespace-nowrap">1</td>
-                                                <td className="px-6 py-4 whitespace-nowrap">DANH MUC 1</td>
-                                                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                    <Link to="/admin/category/123/edit"
+                                            {Category?.map((data,index)=>(
+                                                <tr key={data._id}>
+                                                    <td className="px-6 py-4 whitespace-nowrap">{index+1}</td>
+                                                    <td className="px-6 py-4 whitespace-nowrap">{data.name}</td>
+                                                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                    <Link to={`/admin/category/${data._id}/edit`}
                                                         className="text-indigo-600 hover:text-indigo-900 ">Edit</Link>
-                                                    <button data-id="1"
+                                                        <button onClick={()=>onDelete(data._id)}
                                                         className="btn-remove btn text-red-600 hover:text-red-900">Delete</button>
-                                                </td>
+                                                    </td>
                                             </tr>
+                                            ))}
+
                                         </tbody>
                                     </table>
                                 </div>

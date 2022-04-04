@@ -1,13 +1,19 @@
 import React from 'react'
 import { useForm, SubmitHandler } from "react-hook-form"
+import { useDispatch } from 'react-redux';
+import { toastr } from 'react-redux-toastr';
 import { useNavigate } from "react-router-dom"
+import { addCategory } from '../../../features/Category/category';
 
 const AddDM = () => {
 
     const { register, handleSubmit, formState } = useForm();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
     const onSubmit = (data) => {
-        console.log(data);
+        dispatch(addCategory(data));
+        navigate("/admin/category")
     }
 
 

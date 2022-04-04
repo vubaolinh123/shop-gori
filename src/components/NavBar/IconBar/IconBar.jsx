@@ -74,12 +74,15 @@ const IconBar = () => {
     }
 
     const Logout = ()=>{
-        console.log("Hello");
         if(localStorage.getItem('user')){
             localStorage.removeItem('user');
             setOpenInfoUser(false)
         }
     }
+
+    useEffect(()=>{
+
+    },[openLogin, openInfoUser])
 
 
 
