@@ -1,11 +1,13 @@
 import { BsSearch } from 'react-icons/bs'
 import { FaRegUser } from 'react-icons/fa'
 import { BsCart2 } from 'react-icons/bs'
+import { numberFormat } from '../../../config/numberFormat';
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { signin } from '../../../features/User/userSlice'
+import { getProductSearch } from '../../../features/Product/productSearchSlice'
 
 
 
@@ -15,14 +17,10 @@ const IconBar = () => {
     const [openLogin, setOpenLogin] = useState(false)
     // const [isUser, setisUser] = useState(false)
     const [openInfoUser, setOpenInfoUser] = useState(false)
+    const [lengthCart, setLengthCart] = useState(0)
     const {register, handleSubmit, formState } = useForm();
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    
-    const onSubmit = (data) => {
-        dispatch(signin(data))
-        setOpenLogin(false)
-    }
 
     const handleSearch = () => {
         if (!openSearch) {
@@ -81,10 +79,24 @@ const IconBar = () => {
     }
 
     useEffect(()=>{
+        let cart = []
+        if (localStorage.getItem('cart')) {
+            cart = JSON.parse(localStorage.getItem('cart'))
+            setLengthCart(cart.length)
+        }
+    },[])
 
-    },[openLogin, openInfoUser])
+    const onSubmit = (data) => {
+        dispatch(signin(data))
+        setOpenLogin(false)
+    }
 
+    const dataSearch = useSelector(data => data.productSearch.value)
 
+    const onSubmitSearch = (keyword)=>{
+        dispatch(getProductSearch(keyword.keyword))
+        console.log(dataSearch);
+    }
 
     return (
         <div className="flex items-center justify-center">
@@ -99,10 +111,10 @@ const IconBar = () => {
                             <div className="p-[20px] w-full">
                                 <div className="block w-full">
                                     <p className="text-center text-[18px] color-[#000] border-b-[1px] pb-[10px]">TÌM KIẾM</p>
-                                    <div className="flex justify-end w-full my-6">
+                                    <form className="flex justify-end w-full my-6" onSubmit={ handleSubmit(onSubmitSearch)}>
                                         <div className="w-full">
-                                            <input
-                                                type="text"
+                                            <input 
+                                                type="text" {...register('keyword')}
                                                 placeholder='Tìm kiếm sản phẩm...'
                                                 className="
                                                     bg-[#f3f3f3]
@@ -119,10 +131,21 @@ const IconBar = () => {
                                                 "
                                             />
                                         </div>
-                                        <button type="button" className="bg-[#f3f3f3] absolute w-[50px] h-[44px] flex items-center justify-center">
+                                        <button className="bg-[#f3f3f3] absolute w-[50px] h-[44px] flex items-center justify-center">
                                             <BsSearch size="18px" color="#677279" />
                                         </button>
-                                    </div>
+                                    </form>
+                                </div>
+                                <div className="text-[15px] min-w-[200px] overflow-auto">
+
+                                    {dataSearch && dataSearch?.map((data)=>(
+                                        <Link to={`/product/${data._id}`} className="inline-block" key={data._id}>
+                                            <span className="">{data.name}</span>
+                                            <del className="inline-block mx-[5px] text-gray-500">{numberFormat.format(data.oldPrice)}</del>
+                                            <span  className="inline-block text-red-500">{numberFormat.format(data.price)}</span> 
+                                        </Link>
+                                        ))}
+                                        
                                 </div>
                             </div>
                         </div>
@@ -183,7 +206,7 @@ const IconBar = () => {
                     <div className="relative">
                         <BsCart2 onClick={ handleCart } size="23px" className="mx-[10px] cursor-pointer font-light color-[#252a2b] " />
                         <span className="count-holder absolute">
-                            <Link to="">1</Link>
+                            <Link to="">{lengthCart}</Link>
                         </span>
                     </div>
 

@@ -28,12 +28,12 @@ const Hoodie = () => {
                         <div className=" w-[100%] flex flex-col cursor-pointer">
                             <div className="flex flex-wrap w-full m-[-6px]">
                                 { product?.map(data => (
-                                    <div key={ data._id } className="flex w-[33.3333%] p-[6px] ">
+                                    <Link to={`/product/${data._id}`} key={ data._id } className="flex w-[33.3333%] p-[6px] ">
                                         <div className="transition-all duration-300 hover:shadow-xl w-full flex">
                                             <div className="w-full relative">
-                                                <a className="cursor-pointer">
+                                                <Link to={`/product/${data._id}`} className="cursor-pointer">
                                                     <img src={ data.image } />
-                                                </a>
+                                                </Link>
                                                 <div className="bg-[#ff0000] absolute top-[10px] right-[10px] z-10 text-[12px] text-[#fff] px-[6px]">
                                                     <span className="">
                                                         { 100- Math.round(((data.price / data.oldPrice) * 100 ))}%
@@ -53,7 +53,7 @@ const Hoodie = () => {
                                                 </p>
                                             </div>
                                         </div>
-                                    </div>
+                                    </Link>
                                 )) }
                             </div>
                         </div>

@@ -1,18 +1,50 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { FaShippingFast } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
 import { getOneProducts } from '../../features/Product/product'
 import { numberFormat } from '../../config/numberFormat'
 import { getProductInCategory } from '../../features/Category/ProInCate'
+import { useForm } from 'react-hook-form'
+import { addToCart } from '../../utils/cart'
 
 
 const DetailProduct = () => {
+    const [quantity, setQuantity] = useState(1)
+    const {register, handleSubmit, formState: {errors}} = useForm()
     const dispatch = useDispatch()
     const dataProduct = useSelector(data=> data.product.value);
     const {catePro, product} = useSelector(data => data.proincate.value);
     const IdCate = dataProduct.CategoryProduct;
     const {id} = useParams();
+
+    const AddCard = (data)=>{
+        const infoCart = {
+            _id: dataProduct._id,
+            size: data.size,
+            quantity: quantity*1,
+            name: dataProduct.name,
+            desc: dataProduct.desc,
+            oldPrice: dataProduct.oldPrice*1,
+            price: dataProduct.price*1,
+            CategoryProduct: dataProduct.CategoryProduct
+        }
+        addToCart(infoCart)
+        setQuantity(1)
+    }
+
+    const incrementQuantity = ()=>{
+        setQuantity(quantity+1)
+    }
+    const decrementQuantity = ()=>{
+        if(quantity < 2){
+            setQuantity(1)
+        }else{
+            setQuantity(quantity-1)
+        }
+        
+    }
+   
 
     useEffect(()=>{
         dispatch(getOneProducts(id))
@@ -26,16 +58,16 @@ const DetailProduct = () => {
                     <ul >
                         <li className="inline-block mx-[5px]"><Link to="/" className="py-[15px] inline-block text-[15px]">Trang Chủ</Link> </li>
                         <li className="inline-block mx-[5px]"><span className="text-[#999292]">/</span></li>
-                        <li className="inline-block mx-[5px]"><Link to={`/category/${catePro._id}`} className="py-[15px]  inline-block text-[15px]">{catePro.name}</Link> </li>
+                        <li className="inline-block mx-[5px]"><Link to={`/category/${catePro?._id}`} className="py-[15px]  inline-block text-[15px]">{catePro?.name}</Link> </li>
                         <li className="inline-block mx-[5px]"><span className="text-[#999292]">/</span></li>
-                        <li className="inline-block mx-[5px]"><Link to={`/product/${dataProduct._id}`} className="py-[15px]  inline-block text-[15px]">{dataProduct.name}</Link> </li>
+                        <li className="inline-block mx-[5px]"><Link to={`/product/${dataProduct?._id}`} className="py-[15px]  inline-block text-[15px]">{dataProduct?.name}</Link> </li>
                     </ul>
             </div>
         </div>
         <div className="w-full  bg-white mb-[20px] solid border-b-[1px] border-[#ebecf0] pb-[30px]">
             <div className="  w-[1170px] mx-auto ">
                 <div className="grid grid-cols-2 gap-10">
-                    <div className="a"><img className="w-full" src="https://product.hstatic.net/200000015470/product/4_1_82cbc26053574ff48d8a6836f80552f4_large.jpg" alt="" /></div>
+                    <div className="a"><img className="w-full" src={dataProduct.image} alt="" /></div>
                     <div className="a">
                         <div className="">
                             <span className="font-bold text-[26px]">{dataProduct.name}</span>
@@ -44,22 +76,23 @@ const DetailProduct = () => {
                                 <del className="text-[#878c8f] text-[18px] mr-[20px]">{numberFormat.format(dataProduct.oldPrice)}</del>
                                 <span className="text-[25px] text-red-500 font-semibold">{numberFormat.format(dataProduct.price)}</span>
                             </div>
-                            <form action="" className="">
+                            <form action="" className="" onSubmit={handleSubmit(AddCard)}>
                                 <div className="my-[30px] grid grid-cols-3  solid border-b-2 border-[#ebecf0] pb-[20px]">
                                     <div className="">Kích thước</div>
                                         <div className="col-span-2">
                                             <div className="inline-block">
-                                                <input type="radio" name="options1" value="M"/>
+                                                <input type="radio" name="options1" value="M" {...register('size', {required: true})}/>
                                                 <label htmlFor=""><span>M</span></label>
                                             </div>
                                             <div className="inline-block">
-                                                <input type="radio" name="options1"  value="L"/>
+                                                <input type="radio" name="options1"  value="L" {...register('size', {required: true})} />
                                                 <label htmlFor=""><span>L</span></label>
                                             </div>
                                             <div className="inline-block">
-                                                <input type="radio" name="options1"  value="XL"/>
+                                                <input type="radio" name="options1"  value="XL" {...register('size', {required: true})}  />
                                                 <label htmlFor=""><span>XL</span></label>
                                             </div>
+                                            {errors.size && <span className="text-red-500 block my-[5px] text-[15px]">Chọn Size sản phẩm</span>  }
                                         </div>
                                 </div>
                                 <h2 className="font-bold text-[22px] my-[5px] ">THÔNG TIN SẢN PHẨM</h2>
@@ -70,7 +103,7 @@ const DetailProduct = () => {
                                     <div className="grid grid-cols-3">
                                     <div className="text-[#252a2b] ">
                                         <input type="button" value="-" className="bg-[#f3f4f4] border solid border-[#f3f4f4] cursor-pointer text-[16px] font-semibold h-[45px] w-[45px] text-center outline-none"/>
-                                        <input type="text" min="1" value="1" className="bg-[#fff] font-semibold h-[45px] w-[60px]  border solid border-[#f3f4f4] text-center"/>
+                                        <input type="text"    min="1" value="1" className="bg-[#fff] font-semibold h-[45px] w-[60px]  border solid border-[#f3f4f4] text-center"/>
                                         <input type="button" value="+"  className="bg-[#f3f4f4] border solid border-[#f3f4f4] cursor-pointer text-[16px] font-semibold h-[45px] w-[45px] text-center outline-none"/>
                                     </div>
                                     <div className="col-span-2">
@@ -81,12 +114,12 @@ const DetailProduct = () => {
                                 ): (
                                     <div className="grid grid-cols-3">
                                     <div className="text-[#252a2b] ">
-                                        <input type="button" value="-" className="bg-[#f3f4f4] border solid border-[#f3f4f4] cursor-pointer text-[16px] font-semibold h-[45px] w-[45px] text-center outline-none"/>
-                                        <input type="text" min="1" value="1" className="bg-[#fff] font-semibold h-[45px] w-[60px]  border solid border-[#f3f4f4] text-center"/>
-                                        <input type="button" value="+"  className="bg-[#f3f4f4] border solid border-[#f3f4f4] cursor-pointer text-[16px] font-semibold h-[45px] w-[45px] text-center outline-none"/>
+                                        <input type="button" onClick={()=>decrementQuantity()}  value="-" className="bg-[#f3f4f4] border solid border-[#f3f4f4] cursor-pointer text-[16px] font-semibold h-[45px] w-[45px] text-center outline-none"/>
+                                        <input type="text" {...register('quantity', {required: true})}  value={quantity}  min="1" className="bg-[#fff] font-semibold h-[45px] w-[60px]  border solid border-[#f3f4f4] text-center"/>
+                                        <input type="button" onClick={()=>incrementQuantity()} value="+"  className="bg-[#f3f4f4] border solid border-[#f3f4f4] cursor-pointer text-[16px] font-semibold h-[45px] w-[45px] text-center outline-none"/>
                                     </div>
                                     <div className="col-span-2">
-                                        <button type="button" className="addCart bg-red-500 text-white h-[45px] text-[16px] px-[15px] w-full font-semibold" >THÊM VÀO GIỎ</button>
+                                        <button  className="addCart bg-red-500 text-white h-[45px] text-[16px] px-[15px] w-full font-semibold" >THÊM VÀO GIỎ</button>
                                     </div>
                                 </div>
                                 )}
@@ -102,12 +135,12 @@ const DetailProduct = () => {
                 <h2 className="text-[27px] font-bold text-center my-[15px]"> <span>Sản Phẩm Liên Quan</span>  </h2>
                 <div className="grid grid-cols-5 gap-4">
                     {product?.map((data)=>(
-                        <Link to={`/product/${data._id}`} key={data._id} className="w-full transition-all duration-300 hover:shadow-xl">
+                        <Link to={`/product/${data?._id}`} key={data?._id} className="w-full transition-all duration-300 hover:shadow-xl">
                         <div className="w-full relative">
                             <a className="cursor-pointer">
                                 <img src="https://product.hstatic.net/200000015470/product/4_1_82cbc26053574ff48d8a6836f80552f4_large.jpg" />
                             </a>
-                            {data.status == 1 ? (
+                            {data.status === 1 ? (
                                 <div className="bg-[#676767] absolute top-[10px] right-[10px] z-10 text-[12px] text-[#fff] px-[6px]">
                                     <span className="">Hết Hàng</span>
                             </div>

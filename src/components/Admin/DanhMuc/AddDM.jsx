@@ -7,7 +7,7 @@ import { addCategory } from '../../../features/Category/category';
 
 const AddDM = () => {
 
-    const { register, handleSubmit, formState } = useForm();
+    const { register, handleSubmit, formState: {errors} } = useForm();
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -38,8 +38,9 @@ const AddDM = () => {
 
                                                     <div className="col-span-6 sm:col-span-3">
                                                         <label className="block text-sm font-medium text-gray-700">Tên sản Danh Mục</label>
-                                                        <input type="text" name="category-name" id="category-name" placeholder="Nhập tên danh mục" { ...register('name') }
+                                                        <input type="text" name="category-name" id="category-name" placeholder="Nhập tên danh mục" { ...register('name',{required: true}) }
                                                             className="mt-1 py-2 px-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                                                            {errors.name && <span className="text-red-500 block my-[5px] text-[15px]">Vui lòng nhập tên danh mục</span>  }
                                                     </div>
 
                                                 </div>

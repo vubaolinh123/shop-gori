@@ -2,20 +2,18 @@ import React from 'react'
 import {toastr} from 'react-redux-toastr'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 import { signup } from '../../features/User/userSlice'
 
 
 const Register = () => {
     const {register, handleSubmit, formState} = useForm()
-    const navigate = useNavigate();
     const dispatch = useDispatch()
 
     const onSubmit = (data) => {
         try {
             dispatch(signup(data))
         } catch (error) {
-            console.log(error);
+           
         }
     }
 

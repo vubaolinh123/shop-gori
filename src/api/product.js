@@ -29,3 +29,8 @@ export const update = (product) => {
     const url = `/products/${product._id}`;
     return instance.put(url, product);
 }
+
+export const search = (keyword) => {
+    const url = `/products/search?name=${keyword}`;
+    return instance.get(url);
+}

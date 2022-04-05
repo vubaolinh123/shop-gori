@@ -9,7 +9,7 @@ const ListDanhMuc = () => {
 
     useEffect(()=>{
         dispatch(getCategory());
-    },[Category])
+    },[])
 
     const onDelete = (id) =>{
         const comfirm = window.confirm("Bạn có muốn xóa không ?");
@@ -51,7 +51,7 @@ const ListDanhMuc = () => {
                                         </thead>
                                         <tbody className="bg-white divide-y divide-gray-200">
 
-                                            {Category?.map((data,index)=>(
+                                            {Category && Category?.map((data,index)=>(
                                                 <tr key={data._id}>
                                                     <td className="px-6 py-4 whitespace-nowrap">{index+1}</td>
                                                     <td className="px-6 py-4 whitespace-nowrap">{data.name}</td>
