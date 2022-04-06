@@ -7,11 +7,11 @@ import { getCategory } from '../../../features/Category/category';
 
 const ListBar = () => {
     const dataCategory = useSelector(data => data.category.value);
-    const dispatch =  useDispatch()
+    const dispatch = useDispatch()
 
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(getCategory())
-    },[])
+    }, [])
 
     return (
         <div className="flex mx-auto">
@@ -20,17 +20,17 @@ const ListBar = () => {
                     <NavLink to="/" className="nav-link">Trang chủ</NavLink>
                 </li>
                 <li className="listNav mx-[10px] color-[#252a2b] relative ">
-                    <NavLink to="/product" className="flex justify-center items-center nav-link" >
+                    <NavLink to="/product/1" className="flex justify-center items-center nav-link" >
                         Sản phẩm
                         <MdKeyboardArrowDown size="16px" />
                     </NavLink>
                     <div className="listItem absolute bg-white z-50 top-[46px]">
                         <ul className="min-w-[180px]">
-                            {dataCategory?.map((category)=>(
-                                <li key={category._id} className="border border-[#f6f6f6] text-[14px] text-[#252a2b]">
-                                <Link className="py-[8px] px-[18px] block" to={`/category/${category._id}`}>{category.name}</Link>
-                            </li>
-                            ))}
+                            { dataCategory?.map((category) => (
+                                <li key={ category._id } className="border border-[#f6f6f6] text-[14px] text-[#252a2b]">
+                                    <Link className="py-[8px] px-[18px] block" to={ `/category/${category._id}` }>{ category.name }</Link>
+                                </li>
+                            )) }
                         </ul>
                     </div>
                 </li>

@@ -28,7 +28,7 @@ function App() {
           <Route path="/" element={ <WebsiteLayout /> }>
             <Route index element={ <Homepage /> }></Route>
             <Route path="contact" element={ <ContactPage /> }></Route>
-            <Route path="product" element={ <AllProduct /> }></Route>
+            <Route path="product/:page" element={ <AllProduct /> }></Route>
             <Route path="product/:id" element={ <DetailProduct /> }></Route>
             <Route path="category/:id" element={ <ProInCate /> }></Route>
             <Route path="register" element={ <Register /> }></Route>

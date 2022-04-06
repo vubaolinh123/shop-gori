@@ -28,6 +28,17 @@ body{
   background-color: rgb(17 24 39 / var(--tw-bg-opacity));
 }
 
+.pageActive{
+    display: inline-block;
+    border: 1px solid black;
+    width: 40px;
+}
+
+.pageActive.active{
+    color: black;
+    font-weight: bold;
+}
+
 .listItem {
     display: none;
 }
