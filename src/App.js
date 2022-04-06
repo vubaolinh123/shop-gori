@@ -17,6 +17,7 @@ import ThongKe from './components/Admin/ThongKe/ThongKe'
 import DetailProduct from './components/DetailProducts/DetailProduct'
 import Register from './components/Auth/Register'
 import ProInCate from './components/Category/ProInCate'
+import Cart from './components/Cart/Cart'
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
             <Route path="product/:id" element={ <DetailProduct /> }></Route>
             <Route path="category/:id" element={ <ProInCate /> }></Route>
             <Route path="register" element={ <Register /> }></Route>
+            <Route path="cart" element={ <Cart /> }></Route>
 
           </Route>
           <Route path="/admin" element={ <AdminLayout /> }>

@@ -49,7 +49,8 @@ export const getOneProducts = createAsyncThunk(
 const productSlice = createSlice({
     name: "product",
     initialState: {
-        value: []
+        value: [],
+        status: null
     },
     extraReducers: (builder) => {
         builder.addCase(getProducts.fulfilled, (state, action) => {

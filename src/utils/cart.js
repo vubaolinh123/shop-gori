@@ -4,13 +4,14 @@ if (localStorage.getItem('cart')) {
 }
 
 export const addToCart = (newProduct) => {
-    console.log(newProduct);
+    console.log("newProduct", newProduct);
     const existProduct = cart.find(item => item._id === newProduct._id);
-    console.log(existProduct);
+    console.log("exitsProduct", existProduct);
     if (!existProduct) {
         cart.push(newProduct);
     } else {
         existProduct.quantity += newProduct.quantity;
+        existProduct.total += newProduct.total;
     }
     localStorage.setItem('cart', JSON.stringify(cart));
 }
@@ -32,8 +33,10 @@ export const decInQty = (id, soluong) => {
 }
 export const removeItemInCart = (id) => {
     const confirm = window.confirm("Bạn có muốn xóa không?");
+
     if (confirm) {
-        cart = cart.filter(item => item.id != id)
+        cart = cart.filter(item => item._id != id)
+        localStorage.setItem('cart', JSON.stringify(cart));
     }
-    localStorage.setItem('cart', JSON.stringify(cart));
+
 }

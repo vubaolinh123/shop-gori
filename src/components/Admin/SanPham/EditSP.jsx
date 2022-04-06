@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom';
 import { getCategory } from '../../../features/Category/category';
 import { getOneProducts, updateProducts } from '../../../features/Product/product';
-
+import { read } from  '../../../api/product'
 
 const EditSP = () => {
     const {register, handleSubmit, formState: {errors}, reset} = useForm()
@@ -15,6 +15,17 @@ const EditSP = () => {
     const navigate = useNavigate()
     const {id} = useParams()
     
+    useEffect( ()=>{
+         dispatch(getCategory());
+         const getProduct = async () => {
+            const { data } = await read(id);
+            reset(data);
+         }
+         getProduct()
+        //  dispatch(getOneProducts(id));
+        
+    },[id])
+
     const onSubmit =  (data) =>{
         const dataProduct = {
             _id: id,
@@ -27,14 +38,9 @@ const EditSP = () => {
             CategoryProduct: data.CategoryProduct
         }
          dispatch(updateProducts(dataProduct));
+         navigate("/admin/product")
     }
     
-    useEffect( ()=>{
-         dispatch(getCategory());
-         dispatch(getOneProducts(id));
-         reset(dataProduct);
-    },[])
-
     return (
         <div>
             <div>

@@ -7,13 +7,16 @@ import { numberFormat } from '../../config/numberFormat'
 import { getProductInCategory } from '../../features/Category/ProInCate'
 import { useForm } from 'react-hook-form'
 import { addToCart } from '../../utils/cart'
+import { read } from '../../api/product'
+import { store } from '../../app/store'
 
 
 const DetailProduct = () => {
     const [quantity, setQuantity] = useState(1)
+    const [dataProduct, setProduct] = useState([])
     const {register, handleSubmit, formState: {errors}} = useForm()
     const dispatch = useDispatch()
-    const dataProduct = useSelector(data=> data.product.value);
+    // const dataProduct = useSelector(data=> data.product.value);
     const {catePro, product} = useSelector(data => data.proincate.value);
     const IdCate = dataProduct.CategoryProduct;
     const {id} = useParams();
@@ -27,7 +30,8 @@ const DetailProduct = () => {
             desc: dataProduct.desc,
             oldPrice: dataProduct.oldPrice*1,
             price: dataProduct.price*1,
-            CategoryProduct: dataProduct.CategoryProduct
+            CategoryProduct: dataProduct.CategoryProduct,
+            total:  (dataProduct.price*1) * (quantity*1)
         }
         addToCart(infoCart)
         setQuantity(1)
@@ -47,8 +51,14 @@ const DetailProduct = () => {
    
 
     useEffect(()=>{
-        dispatch(getOneProducts(id))
+        const getOneProduct = async ()=>{
+            const {data} = await read(id)
+            console.log("dataPro",data);
+            setProduct(data)
+        }
+        getOneProduct()
         dispatch(getProductInCategory(IdCate));
+        
     },[id,IdCate])
 
   return (
@@ -92,7 +102,7 @@ const DetailProduct = () => {
                                                 <input type="radio" name="options1"  value="XL" {...register('size', {required: true})}  />
                                                 <label htmlFor=""><span>XL</span></label>
                                             </div>
-                                            {errors.size && <span className="text-red-500 block my-[5px] text-[15px]">Chọn Size sản phẩm</span>  }
+                                            {errors.size && <span className="text-red-500 block my-[5px] text-[18px] font-bold">Chọn Size sản phẩm</span>  }
                                         </div>
                                 </div>
                                 <h2 className="font-bold text-[22px] my-[5px] ">THÔNG TIN SẢN PHẨM</h2>

@@ -1,21 +1,26 @@
-import { configureStore } from '@reduxjs/toolkit';
-import productReducer from "../features/Product/product"
-import categoryReducer from "../features/Category/category"
-import proincateReducer from "../features/Category/ProInCate"
-import productSearchReducer from "../features/Product/productSearchSlice"
-import { reducer as toastrReducer } from 'react-redux-toastr'
+import { configureStore } from "@reduxjs/toolkit";
+import {
+  persistStore,
+  persistReducer
+  // FLUSH,
+  // REHYDRATE,
+  // PAUSE,
+  // PERSIST,
+  // PURGE
+} from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import rootReducer from "../features/index";
 
+const persistConfig = {
+  key: "root",
+  storage,
+  whitelist: ["user"]
+};
 
-
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-  reducer: {
-    toastr: toastrReducer,
-    product: productReducer,
-    category: categoryReducer,
-    proincate: proincateReducer,
-    productSearch: productSearchReducer
-  },
+  reducer: persistedReducer,
 });
-
+export const persistor = persistStore(store);
 

@@ -37,12 +37,15 @@ const userSlice = createSlice({
     initialState: {
         isAuthenticate: false,
         current: [],
-        user: [],
         settings: {}
     },
     extraReducers: (builder) => {
+        builder.addCase(signup.fulfilled, (state, action) => {
+            state.current = action.payload;
+        });
         builder.addCase(signin.fulfilled, (state, action) => {
             state.isAuthenticate = true;
+            state.current = action.payload
         })
     }
 })

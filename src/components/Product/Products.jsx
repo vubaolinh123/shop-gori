@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
 import { numberFormat } from '../../config/numberFormat';
@@ -24,7 +24,7 @@ const Products = () => {
                     </h2>
                     <div className="w-full mt-[10px] mb-[30px]">
                         <div className="m-[-6px] w-[100%] inline-flex flex-wrap">
-                            { dataProduct?.map(data => (
+                            { dataProduct && dataProduct.map(data => (
                                 <Link to={`/product/${data._id}`} key={ data._id } className=" p-[6px] w-[25%] cursor-pointer ">
                                     <div className="w-full transition-all duration-300 hover:shadow-xl">
                                         <div className="w-full relative">
