@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { toastr } from "react-redux-toastr";
-import { add, filter, list, read, remove, search, update } from "../../api/product";
+import { add, filter, filterProduct, list, read, remove, search, update } from "../../api/product";
 
 export const getProducts = createAsyncThunk(
     "product/getProducts",
@@ -48,7 +48,7 @@ export const getOneProducts = createAsyncThunk(
 export const getProductPage = createAsyncThunk(
     "product/getProductPage",
     async (numberPage, thunkAPI) => {
-        const { data } = await filter(numberPage.page);
+        const { data } = await filter(numberPage);
         return data
     }
 )
@@ -56,7 +56,7 @@ export const getProductPage = createAsyncThunk(
 export const getProductFilter = createAsyncThunk(
     "product/getProductFilter",
     async (filter, thunkAPI) => {
-        const { data } = await filter(filter);
+        const { data } = await filterProduct(filter.page, filter.order);
         return data
     }
 )
@@ -67,7 +67,6 @@ const productSlice = createSlice({
     initialState: {
         value: [],
         valueLimitPage: [],
-        valueFilter: [],
         status: null
     },
     extraReducers: (builder) => {
@@ -90,7 +89,7 @@ const productSlice = createSlice({
             state.valueLimitPage = action.payload
         })
         builder.addCase(getProductFilter.fulfilled, (state, action) => {
-            state.valueFilter = action.payload
+            state.valueLimitPage = action.payload
         })
 
 

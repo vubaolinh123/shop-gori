@@ -1,20 +1,21 @@
+import { useSelector } from "react-redux";
 import { isAuthenticate } from "../utils/localstorage";
 import instance from "./instance";
 const { token, user } = isAuthenticate()
+
 
 export const list = () => {
     const url = `/products`;
     return instance.get(url);
 }
 
-export const filter = (Order) => {
-    let url = "product/filter?page=1&limit=8"
-    console.log("order", Order);
-    if (Order.order != "0") {
-        url = `product/filter?page=${Order.page}&limit=8&sort=${Order.order}`
-    } else {
-        url = `product/filter?page=${Order.page}&limit=8`
-    }
+export const filter = (page) => {
+    const url = `product/filter?page=${page}&limit=8`
+    return instance.get(url)
+}
+
+export const filterProduct = (page, order) => {
+    const url = `product/filter?page=${page}&limit=8&sort=${order}`
     return instance.get(url)
 }
 

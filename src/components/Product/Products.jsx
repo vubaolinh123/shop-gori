@@ -9,10 +9,10 @@ import { useNavigate } from 'react-router-dom'
 
 
 const Products = () => {
-    const [reRenderPage, setReRenderPage] = useState(false)
+    let [reRenderPage, setReRenderPage] = useState(0)
     const dataProduct = useSelector(data => data.product.value);
     const dataProductPage = useSelector(data => data.product.valueLimitPage);
-    const dataProductFilter = useSelector(data => data.product.getProductFilter)
+    const dataProductFilter = useSelector(data => data.product.valueFilter)
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const { page } = useParams()
@@ -23,24 +23,21 @@ const Products = () => {
     }
 
     const handleOnChange = (value) => {
-        const filter = {
+        const Filter = {
             page: page,
             order: value
         }
-        dispatch(getProductFilter(filter))
-        setReRenderPage(true)
+        dispatch(getProductFilter(Filter))
+        setReRenderPage(reRenderPage++)
     }
 
     useEffect(() => {
         if (page > totalPage.length) {
             navigate('/product/1')
         }
-        const filter = {
-            page: page,
-            order: "0"
-        }
-        dispatch(getProductPage(filter))
+        dispatch(getProductPage(page))
         dispatch(getProducts())
+
     }, [page, reRenderPage])
 
     return (
@@ -53,7 +50,7 @@ const Products = () => {
                         </h2>
                         <div className="inline-block relative w-64 ">
                             <select onChange={ (e) => handleOnChange(e.target.value) } className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-[50px] py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
-                                <option value="0">Sắp Xếp</option>
+                                <option value="-createdAt">Sắp Xếp</option>
                                 <option value="price">Giá: Tăng dần</option>
                                 <option value="-price">Giá: Giảm dần</option>
                                 <option value="createdAt">Cũ nhất</option>

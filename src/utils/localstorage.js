@@ -1,4 +1,10 @@
+
+
+
+
 export const isAuthenticate = () => {
+
+
     if (!localStorage.getItem('user')) {
         const fake = {
             token: "fakeToken",
@@ -10,3 +16,5 @@ export const isAuthenticate = () => {
     }
     return JSON.parse(localStorage.getItem('user'));
 }
+
+

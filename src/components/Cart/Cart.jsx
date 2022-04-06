@@ -85,7 +85,7 @@ const Cart = () => {
                 </div>
             </div>
             <div className="my-[30px]">
-                <div className="text-center"> <Link to="/product" className="border border-black rounded text-[22px] font-bold px-[200px] py-[7px] hover:text-[#2962ff] hover:border-[#4b77f1]">Tiếp Tục Mua Hàng</Link> </div>
+                <div className="text-center"> <Link to="/products/1" className="border border-black rounded text-[22px] font-bold px-[200px] py-[7px] hover:text-[#2962ff] hover:border-[#4b77f1]">Tiếp Tục Mua Hàng</Link> </div>
             </div>
         </>
     )

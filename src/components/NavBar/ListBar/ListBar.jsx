@@ -20,7 +20,7 @@ const ListBar = () => {
                     <NavLink to="/" className="nav-link">Trang chủ</NavLink>
                 </li>
                 <li className="listNav mx-[10px] color-[#252a2b] relative ">
-                    <NavLink to="/product/1" className="flex justify-center items-center nav-link" >
+                    <NavLink to="/products/1" className="flex justify-center items-center nav-link" >
                         Sản phẩm
                         <MdKeyboardArrowDown size="16px" />
                     </NavLink>
