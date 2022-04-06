@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+
+
 const cartSlice = createSlice({
     name: "cart",
     initialState: {
@@ -10,19 +12,13 @@ const cartSlice = createSlice({
         addItemToCart(state, action) {
             // state.totalQuantity++;
             const newItem = action.payload;
-            const existingItem = state.items.find((item) => item.id === newItem.id);
+            const existingItem = state.items.find((item) => item._id === newItem._id);
             if (!existingItem) {
-                state.item.push({
-                    // itemId: newItem.id,
-                    // price: newItem.price,
-                    ...newItem,
-                    quantity: 1
-                    // totalPrice: newItem.price,
-                    // name: newItem.title
-                });
+                state.items.push(newItem);
+                state.totalQuantity++;
             } else {
-                existingItem.quantity++;
-                // existingItem.totalPrice += newItem.price;
+                existingItem.quantity += newItem.quantity;
+                existingItem.total += newItem.total;
             }
         },
         removeItemFromCart(state, action) {
@@ -30,7 +26,11 @@ const cartSlice = createSlice({
             const id = action.payload;
             // const existingItem = state.items.find((item) => item.id === id);
             // if (existingItem.quantity === 1) {
-            state.items = state.items.filter((item) => item.id !== id);
+            const confirm = window.confirm("Bạn có muốn xóa không?");
+            if (confirm) {
+                state.items = state.items.filter((item) => item._id !== id);
+                state.totalQuantity--;
+            }
             // } else {
             //   existingItem.quantity--;
             //   existingItem.totalPrice -= existingItem.price;

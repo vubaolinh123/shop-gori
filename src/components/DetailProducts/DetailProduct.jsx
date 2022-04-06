@@ -6,9 +6,9 @@ import { getOneProducts } from '../../features/Product/product'
 import { numberFormat } from '../../config/numberFormat'
 import { getProductInCategory } from '../../features/Category/ProInCate'
 import { useForm } from 'react-hook-form'
-import { addToCart } from '../../utils/cart'
 import { read } from '../../api/product'
 import { store } from '../../app/store'
+import { addItemToCart } from '../../features/Cart/cartSlice'
 
 
 const DetailProduct = () => {
@@ -25,6 +25,7 @@ const DetailProduct = () => {
         const infoCart = {
             _id: dataProduct._id,
             size: data.size,
+            image: dataProduct.image,
             quantity: quantity*1,
             name: dataProduct.name,
             desc: dataProduct.desc,
@@ -33,7 +34,7 @@ const DetailProduct = () => {
             CategoryProduct: dataProduct.CategoryProduct,
             total:  (dataProduct.price*1) * (quantity*1)
         }
-        addToCart(infoCart)
+        dispatch(addItemToCart(infoCart))
         setQuantity(1)
     }
 
@@ -53,7 +54,6 @@ const DetailProduct = () => {
     useEffect(()=>{
         const getOneProduct = async ()=>{
             const {data} = await read(id)
-            console.log("dataPro",data);
             setProduct(data)
         }
         getOneProduct()
@@ -148,7 +148,7 @@ const DetailProduct = () => {
                         <Link to={`/product/${data?._id}`} key={data?._id} className="w-full transition-all duration-300 hover:shadow-xl">
                         <div className="w-full relative">
                             <a className="cursor-pointer">
-                                <img src="https://product.hstatic.net/200000015470/product/4_1_82cbc26053574ff48d8a6836f80552f4_large.jpg" />
+                                <img src={data.image} />
                             </a>
                             {data.status === 1 ? (
                                 <div className="bg-[#676767] absolute top-[10px] right-[10px] z-10 text-[12px] text-[#fff] px-[6px]">
