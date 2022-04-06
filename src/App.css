@@ -2,7 +2,24 @@
 body{
     font-family: "Quicksand", sans-serif;
 }
+.radio + .radio {
+    margin-left: 5px;
+}
+.radio input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+.radio input~label {
+    @apply leading-snug border-[1.5px] border-gray-500 rounded-[5px] cursor-pointer max-h-[30px];
+}
 
+.radio input:checked~label {
+    background-color: orange;
+    color: white;
+}
 .nav-link.active {
    color: red;
 }

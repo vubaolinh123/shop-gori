@@ -6,13 +6,15 @@ import { getProductInCategory } from '../../../features/Category/ProInCate';
 
 
 const SeasonHome = () => {
-    const {catePro, product} = useSelector(data => data.proincate.value);
+    const { catePro, product } = useSelector(data => data.proincate.value);
     const dispatch = useDispatch();
 
-    useEffect(()=>{
+
+    useEffect(() => {
         const idCategorySesson = "624ada6aa3b1c3dd3e9c6a21"
         dispatch(getProductInCategory(idCategorySesson))
-    },[])
+
+    }, [])
     return (
         <>
             <div className="pt-[15px] px-0 border-t-[15px] border-[#ebecf0] flex justify-center">
@@ -23,16 +25,16 @@ const SeasonHome = () => {
                     <div className="w-full mt-[10px] mb-[30px]">
                         <div className="m-[-6px] w-[100%] inline-flex flex-wrap">
                             { product?.map(data => (
-                                <Link to={`/product/${data._id}`} key={ data._id } className=" p-[6px] w-[25%] cursor-pointer ">
+                                <Link to={ `/product/${data._id}` } key={ data._id } className=" p-[6px] w-[25%] cursor-pointer ">
 
                                     <div className="w-full transition-all duration-300 hover:shadow-xl">
                                         <div className="w-full relative">
-                                            <Link to={`/product/${data._id}`} className="cursor-pointer">
+                                            <Link to={ `/product/${data._id}` } className="cursor-pointer">
                                                 <img src={ data.image } />
                                             </Link>
                                             <div className="bg-[#ff0000] absolute top-[10px] right-[10px] z-10 text-[12px] text-[#fff] px-[6px]">
                                                 <span className="">
-                                                    { 100 - Math.round(((data.price / data.oldPrice) * 100 ))}%
+                                                    { 100 - Math.round(((data.price / data.oldPrice) * 100)) }%
                                                 </span>
                                             </div>
 

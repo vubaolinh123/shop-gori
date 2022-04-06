@@ -1,4 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { toastr as toastrx } from 'react-redux-toastr'
+import toastr from "toastr";
+
+
 
 
 
@@ -20,24 +24,43 @@ const cartSlice = createSlice({
                 existingItem.quantity += newItem.quantity;
                 existingItem.total += newItem.total;
             }
+
         },
         removeItemFromCart(state, action) {
-            // state.totalQuantity--;
             const id = action.payload;
-            // const existingItem = state.items.find((item) => item.id === id);
-            // if (existingItem.quantity === 1) {
-            const confirm = window.confirm("Bạn có muốn xóa không?");
-            if (confirm) {
-                state.items = state.items.filter((item) => item._id !== id);
-                state.totalQuantity--;
-            }
-            // } else {
-            //   existingItem.quantity--;
-            //   existingItem.totalPrice -= existingItem.price;
-            // }
-        }
+            state.items = state.items.filter((item) => item._id !== id);
+            state.totalQuantity--;
+        },
+        decInQty(state, action) {
+            const id = action.payload.id;
+
+            const currentProduct = state.items.find(item => item._id === id);
+            state.items.flat().forEach((item) => {
+                if (item._id === currentProduct._id) {
+                    item.quantity--;
+                    if (item.quantity < 1) {
+                        item.quantity = 1
+                        item.total = item.price
+                    } else {
+                        item.total = item.price * item.quantity
+                    }
+                }
+            });
+        },
+        incInQty(state, action) {
+            const id = action.payload.id;
+
+            const currentProduct = state.items.find(item => item._id === id);
+            state.items.flat().forEach((item) => {
+                if (item._id === currentProduct._id) {
+                    item.quantity++;
+                    item.total = item.price * item.quantity
+                }
+            });
+        },
+
     }
 });
 
-export const { addItemToCart, removeItemFromCart } = cartSlice.actions;
+export const { addItemToCart, removeItemFromCart, decInQty, incInQty } = cartSlice.actions;
 export default cartSlice.reducer;

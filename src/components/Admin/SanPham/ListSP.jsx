@@ -4,16 +4,19 @@ import { Link } from 'react-router-dom'
 import { numberFormat } from '../../../config/numberFormat';
 import {  useParams } from 'react-router-dom';
 import { getProducts, removeProducts } from '../../../features/Product/product';
+import { toastr } from 'react-redux-toastr';
 
 const ListSP = () => {
     const dataProduct = useSelector(data => data.product.value);
     const dispatch = useDispatch();
 
     const onRemoveProduct = (id)=>{
-        const confirm = window.confirm('Bạn muốn xóa sản phẩm này chứ')
-        if(confirm) {
-            dispatch(removeProducts(id))
-        }
+        
+        const toastrConfirmOptions = {
+            onOk: () => dispatch(removeProducts(id)) ,
+            onCancel: () => console.log('CANCEL: clicked')
+        };
+        toastr.confirm('Bạn Muốn Xóa Sản Phẩm?', toastrConfirmOptions);
     }
 
     useEffect(()=>{

@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { toastr } from 'react-redux-toastr';
 import { Link } from 'react-router-dom'
 import { getCategory, removeCategory } from '../../../features/Category/category';
+
 
 const ListDanhMuc = () => {
     const Category = useSelector(data => data.category.value);
@@ -12,10 +14,11 @@ const ListDanhMuc = () => {
     },[])
 
     const onDelete = (id) =>{
-        const comfirm = window.confirm("Bạn có muốn xóa không ?");
-        if(comfirm){
-            dispatch(removeCategory(id))
-        }
+        const toastrConfirmOptions = {
+            onOk: () =>dispatch(removeCategory(id)) ,
+            onCancel: () => console.log('CANCEL: clicked')
+        };
+        toastr.confirm('Bạn Muốn Xóa Danh Mục?', toastrConfirmOptions);
     }
 
     return (

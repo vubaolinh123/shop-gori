@@ -7,13 +7,15 @@ import { getProductInCategory } from '../../../features/Category/ProInCate';
 
 
 const Hoodie = () => {
-    const {catePro, product} = useSelector(data => data.proincate.value);
+    const { catePro, product } = useSelector(data => data.proincate.value);
     const dispatch = useDispatch();
 
-    useEffect(()=>{
+
+    useEffect(() => {
         const idCategoryHoodie = "624ada75a3b1c3dd3e9c6a23"
         dispatch(getProductInCategory(idCategoryHoodie))
-    },[])
+
+    }, [])
 
     return (
         <>
@@ -28,15 +30,15 @@ const Hoodie = () => {
                         <div className=" w-[100%] flex flex-col cursor-pointer">
                             <div className="flex flex-wrap w-full m-[-6px]">
                                 { product?.map(data => (
-                                    <Link to={`/product/${data._id}`} key={ data._id } className="flex w-[33.3333%] p-[6px] ">
+                                    <Link to={ `/product/${data._id}` } key={ data._id } className="flex w-[33.3333%] p-[6px] ">
                                         <div className="transition-all duration-300 hover:shadow-xl w-full flex">
                                             <div className="w-full relative">
-                                                <Link to={`/product/${data._id}`} className="cursor-pointer">
+                                                <Link to={ `/product/${data._id}` } className="cursor-pointer">
                                                     <img src={ data.image } />
                                                 </Link>
                                                 <div className="bg-[#ff0000] absolute top-[10px] right-[10px] z-10 text-[12px] text-[#fff] px-[6px]">
                                                     <span className="">
-                                                        { 100- Math.round(((data.price / data.oldPrice) * 100 ))}%
+                                                        { 100 - Math.round(((data.price / data.oldPrice) * 100)) }%
                                                     </span>
                                                 </div>
                                             </div>
@@ -48,7 +50,7 @@ const Hoodie = () => {
                                                 <p className="font-semibold text-[#000] text-[14px] mt-[10px]">
                                                     <span className="price">{ numberFormat.format(data.price) }</span>
                                                     <span className="text-[#878c8f] line-through ml-[12px] font-light text-[13px]">
-                                                        { numberFormat.format(data.oldPrice)} 
+                                                        { numberFormat.format(data.oldPrice) }
                                                     </span>
                                                 </p>
                                             </div>

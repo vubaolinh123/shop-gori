@@ -6,12 +6,14 @@ export const list = () => {
     const url = `/products`;
     return instance.get(url);
 }
+
 export const remove = (id) => {
     const url = `/products/${id}`;
     return instance.delete(url);
 }
 
 export const add = (product) => {
+    console.log("UserTokenAPI", user._id, token);
     const url = `/products/${user._id}`;
     return instance.post(url, product, {
         headers: {
