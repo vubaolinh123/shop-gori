@@ -77,7 +77,7 @@ const Cart = () => {
                             </div>
 
                             <div className="text-white bg-red-500 text-center text-[20px] py-[5px] mx-[10px] my-[22px]">
-                                <button >Thanh Toán</button>
+                                <Link to="/checkout"><button >Thanh Toán</button></Link>
                             </div>
                         </div>
 

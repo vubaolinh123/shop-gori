@@ -33,7 +33,7 @@ const Products = () => {
 
     useEffect(() => {
         if (page > totalPage.length) {
-            navigate('/product/1')
+            navigate('/products/1')
         }
         dispatch(getProductPage(page))
         dispatch(getProducts())
@@ -108,7 +108,7 @@ const Products = () => {
             <div className="text-center my-[10px]">
                 <ul className="text-gray-500 text-[23px]">
                     { totalPage.map((page, index) => (
-                        <li key={ index } className="inline-block mr-[15px] hover:font-bold hover:text-black mb-[10px]"><NavLink to={ `/product/${page}` } className="pageActive">{ page }</NavLink> </li>
+                        <li key={ index } className="inline-block mr-[15px] hover:font-bold hover:text-black mb-[10px]"><NavLink to={ `/products/${page}` } className="pageActive">{ page }</NavLink> </li>
                     )) }
                 </ul>
             </div>

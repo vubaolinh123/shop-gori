@@ -18,6 +18,11 @@ import DetailProduct from './components/DetailProducts/DetailProduct'
 import Register from './components/Auth/Register'
 import ProInCate from './components/Category/ProInCate'
 import Cart from './components/Cart/Cart'
+import CheckOut from './components/Cart/CheckOut'
+import Page404 from './pages/404/Page404'
+import PrivateRouter from './components/PrivateRoutes'
+import Bill from './components/Admin/Bill/Bill'
+import DetailBill from './components/Admin/Bill/DetailBill'
 
 
 function App() {
@@ -33,9 +38,9 @@ function App() {
             <Route path="category/:id" element={ <ProInCate /> }></Route>
             <Route path="register" element={ <Register /> }></Route>
             <Route path="cart" element={ <Cart /> }></Route>
-
           </Route>
-          <Route path="/admin" element={ <AdminLayout /> }>
+          <Route path="checkout" element={ <CheckOut /> }></Route>
+          <Route path="/admin" element={ <PrivateRouter><AdminLayout /> </PrivateRouter> }>
             <Route index element={ <Navigate to="dashboard" /> }></Route>
             <Route path="dashboard" element={ <ThongKe /> }></Route >
             <Route path="category" element={ <AllDanhMuc /> }></Route >
@@ -44,7 +49,10 @@ function App() {
             <Route path="product" element={ <AllSanPham /> }></Route>
             <Route path="product/add" element={ <AddSanPham /> }></Route >
             <Route path="product/:id/edit" element={ < EditSanPham /> }></Route >
+            <Route path="bill" element={ <Bill /> }></Route>
+            <Route path=":id/detailBill" element={ <DetailBill /> }></Route>
           </Route>
+          <Route path="*" element={ <Page404 /> } />
         </Routes>
       </div>
     </>

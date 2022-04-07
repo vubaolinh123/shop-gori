@@ -271,9 +271,11 @@ const IconBar = () => {
                                                     XEM GIỎ HÀNG
                                                 </button>
                                             </Link>
-                                            <button className="text-[#fff] bg-[#2962ff] border border-solid border-[#2962ff] hover:text-[#2962ff] hover:bg-white w-full text-[14px] py-[10px] transition-all duration-300 mb-[10px]">
-                                                THANH TOÁN
-                                            </button>
+                                            <Link to="/checkout">
+                                                <button className="text-[#fff] bg-[#2962ff] border border-solid border-[#2962ff] hover:text-[#2962ff] hover:bg-white w-full text-[14px] py-[10px] transition-all duration-300 mb-[10px]">
+                                                    THANH TOÁN
+                                                </button>
+                                            </Link>
                                         </div>
                                     </div>
                                 </div>
