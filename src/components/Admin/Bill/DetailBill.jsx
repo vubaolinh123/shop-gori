@@ -28,7 +28,7 @@ const DetailBill = () => {
                                     <div class="mx-auto p-16" >
                                         <div class="flex items-center justify-between mb-8 px-3">
                                             <div>
-                                                <span class="text-2xl">ID Invoice #{ info._id } </span><br />
+                                                <span class="text-2xl">ID Invoice #{ info && info._id } </span><br />
                                             </div>
                                             <div class="text-right">
                                                 <img src="https://www.stenvdb.be/assets/img/email-signature.png" />
@@ -87,7 +87,7 @@ const DetailBill = () => {
 
                                         <div class="flex justify-between items-center mb-2 px-3 border-t py-2">
                                             <div class="text-2xl leading-none"><span class="">Total</span>:</div>
-                                            <div class="text-2xl text-right font-medium text-red-500">{ info && numberFormat.format(info.total) }</div>
+                                            <div class="text-2xl text-right text-red-500 font-bold">{ info && numberFormat.format(info.total) }</div>
                                         </div>
 
                                         <div class="flex mb-8 justify-end px-3">

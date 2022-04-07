@@ -4,7 +4,6 @@
 
 export const isAuthenticate = () => {
 
-
     if (!localStorage.getItem('user')) {
         const fake = {
             token: "fakeToken",

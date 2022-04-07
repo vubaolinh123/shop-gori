@@ -107,8 +107,7 @@ const IconBar = () => {
 
     let totalCart = 0;
     useEffect(() => {
-        console.log("dataCart", dataCart);
-        console.log("totalQuantity", quantityCart);
+
     }, [])
 
 
