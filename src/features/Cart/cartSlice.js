@@ -32,6 +32,7 @@ const cartSlice = createSlice({
             state.totalQuantity--;
         },
         decInQty(state, action) {
+
             const id = action.payload.id;
             const currentProduct = state.items.find(item => item._id === id);
             state.items.flat().forEach((item) => {
