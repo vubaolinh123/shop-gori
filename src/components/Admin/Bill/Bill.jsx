@@ -1,16 +1,31 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { toastr } from 'react-redux-toastr'
 import { Link } from 'react-router-dom'
 import { numberFormat } from '../../../config/numberFormat'
 import { getAllBill } from '../../../features/Bill/billSlice'
+import { updateStatusBill } from '../../../features/Cart/cartSlice'
 
 const Bill = () => {
+    let [reRenderPage, setReRenderPage] = useState(0)
     const valueBill = useSelector(data => data.bill.value)
     const dispatch = useDispatch()
 
+    const handleOnChange = (value, id) => {
+        const bill = {
+            statusFake: {
+                status: value * 1,
+            },
+            id
+        }
+        dispatch(updateStatusBill(bill))
+        setReRenderPage(reRenderPage++)
+    }
+
     useEffect(() => {
         dispatch(getAllBill())
-    }, [])
+        setReRenderPage(reRenderPage++)
+    }, [reRenderPage])
 
     return (
         <div>
@@ -71,7 +86,54 @@ const Bill = () => {
                                                     <td className="px-6 py-4 whitespace-nowrap">{ data.email }</td>
                                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500  ">{ data.address }</td>
                                                     <td className="px-6 py-4 whitespace-nowrap">{ data.phone }</td>
-                                                    <td className="px-6 py-4 whitespace-nowrap">{ data.status }</td>
+                                                    <td className="px-6 py-4 whitespace-nowrap">
+
+                                                        {
+                                                            (() => {
+                                                                if (data.status === 0) {
+                                                                    return (
+                                                                        <select value="Trạng Thái" onChange={ (e) => handleOnChange(e.target.value, data._id) } className="  form-select appearance-none block w-full px-3  py-1.5 text-base  font-bold text-white  bg-black bg-clip-padding bg-no-repeat  border border-solid border-gray-300  rounded  transition ease-in-out  m-0   focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
+                                                                            <option value="0" className="">Trạng Thái</option>
+                                                                            <option value="1" className="">Đang Vận Chuyển</option>
+                                                                            <option value="2">Giao Thành Công</option>
+                                                                            <option value="3">Hủy Đơn Hàng</option>
+                                                                        </select>
+                                                                    )
+                                                                }
+                                                                if (data.status === 1) {
+                                                                    return (
+                                                                        <select value="Đang Vận Chuyển" onChange={ (e) => handleOnChange(e.target.value, data._id) } className="  form-select appearance-none block w-full px-3  py-1.5 text-base  font-bold text-black  bg-green-300 bg-clip-padding bg-no-repeat  border border-solid border-gray-300  rounded  transition ease-in-out  m-0   focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
+                                                                            <option value="1" >Đang Vận Chuyển</option>
+                                                                            <option value="2">Giao Thành Công</option>
+                                                                            <option value="4">Đơn Hàng Bị Hủy</option>
+                                                                        </select>
+                                                                    )
+                                                                }
+                                                                if (data.status === 2) {
+                                                                    return (
+                                                                        <select className="  form-select appearance-none block w-full px-3  py-1.5 text-base  font-bold text-black  bg-green-500 bg-clip-padding bg-no-repeat  border border-solid border-gray-300  rounded  transition ease-in-out  m-0   focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
+                                                                            <option value="2">Giao Thành Công</option>
+                                                                        </select>
+                                                                    )
+                                                                }
+                                                                if (data.status === 3) {
+                                                                    return (
+                                                                        <select className="  form-select appearance-none block w-full px-3  py-1.5 text-base  font-bold text-black  bg-red-500 bg-clip-padding bg-no-repeat  border border-solid border-gray-300  rounded  transition ease-in-out  m-0   focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
+                                                                            <option value="3">Hủy Đơn Hàng</option>
+                                                                        </select>
+                                                                    )
+                                                                }
+                                                                if (data.status == 4) {
+                                                                    return (
+                                                                        <select className="  form-select appearance-none block w-full px-3  py-1.5 text-base  font-bold text-black  bg-red-500 bg-clip-padding bg-no-repeat  border border-solid border-gray-300  rounded  transition ease-in-out  m-0   focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
+                                                                            <option value="4">Đơn Hàng Bị Hủy</option>
+                                                                        </select>
+                                                                    )
+                                                                }
+                                                            })()
+                                                        }
+
+                                                    </td>
                                                     <td className="px-6 py-4 whitespace-nowrap">{ numberFormat.format(data.total) }</td>
                                                     <td className="px-6 py-4 whitespace-nowrap"><Link to={ `/admin/${data._id}/detailBill` } className="text-blue-500 font-bold">Chi Tiết</Link> </td>
                                                 </tr>

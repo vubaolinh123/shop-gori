@@ -109,3 +109,16 @@ body{
   transform-origin: center left;
   transform: scaleX(1);
 }
+
+.customLine::after{
+    content: "";
+    background: #000;
+    display: block;
+    width: 60px;
+    height: 4px;
+    margin: 20px auto;
+}
+
+.iconLink{
+    list-style: inside;
+}

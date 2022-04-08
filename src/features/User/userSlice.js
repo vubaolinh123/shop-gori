@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { login, register } from "../../api/auth";
 import { toastr } from 'react-redux-toastr'
+import { read } from "../../api/user";
 // import toastr from 'toastr';
 // import "toastr/build/toastr.min.css";
 
@@ -32,22 +33,18 @@ export const signin = createAsyncThunk(
     }
 )
 
+
+
 const userSlice = createSlice({
     name: "user",
     initialState: {
-        isAuthenticate: false,
-        current: [],
-        settings: {}
+        value: []
     },
-    extraReducers: (builder) => {
-        builder.addCase(signup.fulfilled, (state, action) => {
-            state.current = action.payload;
-        });
-        builder.addCase(signin.fulfilled, (state, action) => {
-            state.isAuthenticate = true;
-            state.current = action.payload
-        })
-    }
+    // extraReducers: (builder) => {
+    //     builder.addCase(getInfoUser.fulfilled, (state, action) => {
+    //         state.infoUser = action.payload
+    //     })
+    // }
 })
 
 export default userSlice.reducer;

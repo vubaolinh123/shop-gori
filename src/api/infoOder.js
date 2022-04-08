@@ -16,18 +16,13 @@ export const add = (infoOder) => {
     return instance.post(url, infoOder);
 }
 
-export const remove = (id) => {
-    const url = `/categoryPro/${id}`;
-    return instance.delete(url);
-}
-
 
 export const read = (id) => {
-    const url = `/categoryPro/${id}`;
+    const url = `/order/${id}`;
     return instance.get(url);
 }
 
-export const update = (category) => {
-    const url = `/categoryPro/${category._id}`;
-    return instance.put(url, category);
+export const update = (status, id) => {
+    const url = `/order/${id}`;
+    return instance.put(url, status);
 }

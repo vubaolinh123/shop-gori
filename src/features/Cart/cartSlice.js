@@ -1,14 +1,25 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { toastr as toastrx } from 'react-redux-toastr'
 import toastr from "toastr";
+import { update } from "../../api/infoOder";
 
-
-
-
+export const updateStatusBill = createAsyncThunk(
+    "cart/updateStatusBill",
+    async (bill, thunkAPI) => {
+        try {
+            console.log(bill.statusFake);
+            const { data } = await update(bill.statusFake, bill.id)
+            return data
+        } catch (error) {
+            console.log(error);
+        }
+    }
+)
 
 const cartSlice = createSlice({
     name: "cart",
     initialState: {
+        valueBill: [],
         items: [],
         totalQuantity: 0
     },
@@ -59,13 +70,19 @@ const cartSlice = createSlice({
             });
         },
 
-        resetCard(state, action) {
+        resetCart(state, action) {
             state.items = []
             state.totalQuantity = 0
         },
 
+
+    },
+    extraReducers: (builder) => {
+        builder.addCase(updateStatusBill.fulfilled, (state, action) => {
+            state.valueBill = action.payload
+        })
     }
 });
 
-export const { addItemToCart, removeItemFromCart, decInQty, incInQty, resetCard } = cartSlice.actions;
+export const { addItemToCart, removeItemFromCart, decInQty, incInQty, resetCart } = cartSlice.actions;
 export default cartSlice.reducer;

@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { addDetailBill } from '../../api/detailOrder';
 import { add } from '../../api/infoOder';
 import { numberFormat } from '../../config/numberFormat';
-import { resetCard } from '../../features/Cart/cartSlice';
+import { resetCart } from '../../features/Cart/cartSlice';
 
 const CheckOut = () => {
     const { register, handleSubmit, formState: { errors } } = useForm()
@@ -17,14 +17,32 @@ const CheckOut = () => {
     const navigate = useNavigate()
 
     const addOder = (value) => {
-        const infoOder = {
-            name: value.fullname,
-            email: value.email,
-            address: value.address,
-            phone: value.phone,
-            status: 0,
-            total: totalCart
+        let infoOder = []
+
+
+        if (localStorage.getItem('user')) {
+            let idUser = JSON.parse(localStorage.getItem('user')).user._id
+            infoOder = {
+                name: value.fullname,
+                email: value.email,
+                address: value.address,
+                phone: value.phone,
+                status: 0,
+                total: totalCart,
+                User: idUser
+            }
+        } else {
+            infoOder = {
+                name: value.fullname,
+                email: value.email,
+                address: value.address,
+                phone: value.phone,
+                status: 0,
+                total: totalCart,
+            }
         }
+        console.log(infoOder);
+
 
         const addOrder = async () => {
             if (dataCart.length > 0) {
@@ -42,7 +60,7 @@ const CheckOut = () => {
                         quantity: item.quantity
                     })
                 })
-                dispatch(resetCard())
+                dispatch(resetCart())
                 const toastrConfirmOptions = {
                     onOk: () => { navigate("/") },
                     onCancel: () => navigate("/")
@@ -127,7 +145,7 @@ const CheckOut = () => {
                                         <div className="col-span-2  font-bold text-sm py-[45px]"><span className="text-red-500 font-bold text-[20px]">{ numberFormat.format(item.total) }</span><div className="">Size: { item.size }</div></div>
                                     </div>
                                 )) : (
-                                    <div className=" grid grid-cols-5 border border-b-2 border-x-0 border-t-0 py-4">
+                                    <div className="border border-b-2 border-x-0 border-t-0 py-4 text-[23px]">
                                         <h2>Không có sản phẩm nào trong giỏ hàng</h2>
                                     </div>
                                 ) }

@@ -4,6 +4,7 @@ import instance from "./instance";
 const { token, user } = isAuthenticate()
 
 
+
 export const list = () => {
     const url = `/products`;
     return instance.get(url);

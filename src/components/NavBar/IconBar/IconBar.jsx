@@ -13,7 +13,7 @@ import { removeItemFromCart } from '../../../features/Cart/cartSlice';
 
 let cart = []
 
-const IconBar = () => {
+const IconBar = ({ toggle }) => {
     const [openSearch, setOpenSearch] = useState(false)
     const [openCart, setOpenCart] = useState(false)
     const [openLogin, setOpenLogin] = useState(false)
@@ -77,13 +77,14 @@ const IconBar = () => {
         if (localStorage.getItem('user')) {
             localStorage.removeItem('user');
             setOpenInfoUser(false)
+            navigate("/")
         }
     }
-
 
     const onSubmit = (data) => {
         dispatch(signin(data))
         setOpenLogin(false)
+        navigate("/")
     }
 
     const removeCart = (id) => {
@@ -206,8 +207,8 @@ const IconBar = () => {
                                     <p className="text-center text-[18px] color-[#000] border-b-[1px] border-solid pb-[5px]">THÔNG TIN TÀI KHOẢN</p>
                                     <span className="font-bold text-[15px] my-[10px] block">{ localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')).user.name : "None" }</span>
                                     <ul className="list-disc mx-[20px]">
-                                        <li className=""><Link to="/">Tài khoản của tôi</Link></li>
-                                        <li className=""><button onClick={ () => Logout() }>Đăng xuất</button></li>
+                                        <li className=""><Link to={ `/user/${localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')).user._id : "None"}` } className="hover:text-blue-400">Tài khoản của tôi</Link></li>
+                                        <li className=""><button onClick={ () => Logout() } className="hover:text-blue-400">Đăng xuất</button></li>
                                     </ul>
                                 </div>
                             </div>
