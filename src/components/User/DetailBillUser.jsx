@@ -1,16 +1,38 @@
 import React, { useEffect } from 'react'
 import SideBarUser from './SideBarUser'
-import { getDetailBill } from '../../features/Bill/billSlice';
-import { useParams } from 'react-router-dom';
+import { getDetailBill, updateStatusBill } from '../../features/Bill/billSlice';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { numberFormat } from '../../config/numberFormat';
+import { toastr } from 'react-redux-toastr';
 
 const DetailBillUser = () => {
     const { detail, info } = useSelector(data => data.bill.detailBill)
+    const navigate = useNavigate()
     const dispatch = useDispatch();
     const { id } = useParams()
     const IdDetail = id.slice(0, -1)
     const IdBill = id.slice(-1)
+
+    const handleOnClickHuyDon = () => {
+        const bill = {
+            statusFake: {
+                status: 4,
+            },
+            id: info._id
+        }
+        const toastrConfirmOptions = {
+            onOk: () => {
+                dispatch(updateStatusBill(bill))
+                const idUser = JSON.parse(localStorage.getItem('user')).user._id
+                navigate(`/user/${idUser}`)
+            },
+            onCancel: () => console.log('CANCEL: clicked')
+        };
+        toastr.confirm('Bạn Có Chắc Muốn Hủy Đơn?', toastrConfirmOptions);
+
+    }
+
     useEffect(() => {
         dispatch(getDetailBill(IdDetail))
     }, [])
@@ -23,8 +45,8 @@ const DetailBillUser = () => {
                 <SideBarUser />
                 <div className="col-span-8">
                     <div className="grid grid-cols-3">
-                        <h2 className="font-bold text-[18px] col-span-2">Đơn Hàng <span className="bg-[#f0e538]">#{ IdBill } </span> đặt lúc <span className="bg-[#f0e538]">{ info?.createdAt.slice(0, -5) }</span>  hiện <span className="bg-[#f0e538]">{ info?.status === 0 ? "Đang chờ xác nhận" : info?.status === 1 ? "Đang vận chuyển" : info?.status === 2 ? "Đã giao thành công" : info?.status === 3 ? "Đã bị hủy đơn" : "Bị bạn hủy đơn" }</span> </h2>
-                        <div className="text-right"> <button className="bg-[#f17425] text-white font-bold px-[5px] py-[2px]">Hủy Đơn</button> </div>
+                        <h2 className="font-bold text-[18px] col-span-2">Đơn Hàng <span className="bg-[#f0e538]">#{ IdBill } </span> đặt lúc <span className="bg-[#f0e538]">{ info?.createdAt.slice(0, -5) }</span>  hiện <span className="bg-[#f0e538]">{ info?.status === 0 ? "Đang chờ xác nhận" : info?.status === 1 ? "Đang vận chuyển" : info?.status === 2 ? "Đã giao thành công" : info?.status === 3 ? "Đã bị Admin hủy đơn" : "Đã bị bạn hủy đơn" }</span> </h2>
+                        { info && info.status === 0 ? <div className="text-right"  ><button onClick={ handleOnClickHuyDon } className="bg-[#f17425] text-white font-bold px-[5px] py-[2px]">Hủy Đơn</button> </div> : "" }
                     </div>
                     <h2 className="font-bold text-[25px] my-[15px]">Chi Tiết Đơn Hàng</h2>
                     <div className="">

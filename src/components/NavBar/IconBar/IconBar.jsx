@@ -13,7 +13,7 @@ import { removeItemFromCart } from '../../../features/Cart/cartSlice';
 
 let cart = []
 
-const IconBar = ({ toggle }) => {
+const IconBar = () => {
     const [openSearch, setOpenSearch] = useState(false)
     const [openCart, setOpenCart] = useState(false)
     const [openLogin, setOpenLogin] = useState(false)

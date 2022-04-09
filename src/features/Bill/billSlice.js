@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import { toastr } from "react-redux-toastr";
-import { detailBill, list } from "../../api/infoOder"
+import { detailBill, list, update } from "../../api/infoOder"
 
 
 
@@ -20,6 +20,19 @@ export const getDetailBill = createAsyncThunk(
     }
 )
 
+export const updateStatusBill = createAsyncThunk(
+    "bill/updateStatusBill",
+    async (bill, thunkAPI) => {
+        try {
+            console.log(bill.statusFake);
+            const { data } = await update(bill.statusFake, bill.id)
+            return data
+        } catch (error) {
+            console.log(error);
+        }
+    }
+)
+
 
 const billSlice = createSlice({
     name: "bill",
@@ -34,6 +47,15 @@ const billSlice = createSlice({
         builder.addCase(getDetailBill.fulfilled, (state, action) => {
             state.detailBill = action.payload
         });
+        builder.addCase(updateStatusBill.fulfilled, (state, action) => {
+            // const id = action.payload._id;
+            // const currentBill = state.detailBill.detail.find(item => item._id === id);
+            // state.detailBill.detail.flat().forEach((item) => {
+            //     if (item._id === currentBill._id) {
+            //         item.status = 4
+            //     }
+            // });
+        })
 
     }
 })

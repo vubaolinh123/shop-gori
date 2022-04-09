@@ -4,7 +4,7 @@ import IconBar from './IconBar/IconBar'
 import { Link } from 'react-router-dom'
 
 
-const NavBar = ({ toggle }) => {
+const NavBar = () => {
     return (
 
         <div className="w-full h-[70px] bg-[#fff]">
@@ -14,7 +14,7 @@ const NavBar = ({ toggle }) => {
                     <img src={ logoGori } className="h-[70px] cursor-pointer" />
                 </Link>
                 <ListBar />
-                <IconBar toggle={ toggle } />
+                <IconBar />
 
             </div>
         </div>
