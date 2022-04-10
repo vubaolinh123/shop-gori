@@ -10,6 +10,7 @@ import { read } from '../../api/product'
 import { store } from '../../app/store'
 import { addItemToCart } from '../../features/Cart/cartSlice'
 import { toastr } from 'react-redux-toastr'
+import Comment from '../Comment/Comment'
 
 
 const DetailProduct = () => {
@@ -159,6 +160,9 @@ const DetailProduct = () => {
                     </div>
                 </div>
             </div>
+            {/* Hiển thị Comment */ }
+            <Comment />
+            {/* Hiển thị Comment */ }
             <div className="w-full  bg-white mb-[20px]  pb-[30px]">
                 <div className="  w-[1170px] mx-auto ">
                     <h2 className="text-[27px] font-bold text-center my-[15px]"> <span>Sản Phẩm Liên Quan</span>  </h2>

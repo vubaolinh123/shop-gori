@@ -25,7 +25,8 @@ const DetailBillUser = () => {
             onOk: () => {
                 dispatch(updateStatusBill(bill))
                 const idUser = JSON.parse(localStorage.getItem('user')).user._id
-                navigate(`/user/${idUser}`)
+                // navigate(`/user/${idUser}`)
+                navigate("/")
             },
             onCancel: () => console.log('CANCEL: clicked')
         };

@@ -19,7 +19,7 @@ import ProInCate from './components/Category/ProInCate'
 import Cart from './components/Cart/Cart'
 import CheckOut from './components/Cart/CheckOut'
 import Page404 from './pages/404/Page404'
-import PrivateRouter from './components/PrivateRoutes'
+import { PrivateRouter, PrivateRouterUser } from './components/PrivateRoutes'
 import Bill from './components/Admin/Bill/Bill'
 import DetailBill from './components/Admin/Bill/DetailBill'
 import InfoUser from "./components/User/InfoUser"
@@ -39,8 +39,8 @@ function App() {
             <Route path="category/:id" element={ <ProInCate /> }></Route>
             <Route path="register" element={ <Register /> }></Route>
             <Route path="cart" element={ <Cart /> }></Route>
-            <Route path="user/:id" element={ <PrivateRouter><InfoUser /></PrivateRouter> }></Route>
-            <Route path="user/:id/detail" element={ <PrivateRouter><DetailBillUser /></PrivateRouter> }></Route>
+            <Route path="user/:id" element={ <PrivateRouterUser><InfoUser /></PrivateRouterUser> }></Route>
+            <Route path="user/:id/detail" element={ <PrivateRouterUser><DetailBillUser /></PrivateRouterUser> }></Route>
           </Route>
           <Route path="checkout" element={ <CheckOut /> }></Route>
           <Route path="/admin" element={ <PrivateRouter><AdminLayout /> </PrivateRouter> }>

@@ -2,9 +2,13 @@ import logoGori from '../../assets/logo/logoGori.webp'
 import ListBar from './ListBar/ListBar'
 import IconBar from './IconBar/IconBar'
 import { Link } from 'react-router-dom'
-
+import { useEffect } from 'react'
 
 const NavBar = () => {
+
+    useEffect(() => {
+
+    }, [])
     return (
 
         <div className="w-full h-[70px] bg-[#fff]">

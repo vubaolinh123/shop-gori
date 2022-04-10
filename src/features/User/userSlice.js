@@ -23,8 +23,6 @@ export const signin = createAsyncThunk(
     async (userData, { rejectWithValue }) => {
         try {
             const { data } = await login(userData);
-
-            localStorage.setItem("user", JSON.stringify(data))
             toastr.success("Thông Báo", "Đăng nhập thành công");
             return data;
         } catch (error) {
@@ -38,13 +36,20 @@ export const signin = createAsyncThunk(
 const userSlice = createSlice({
     name: "user",
     initialState: {
-        value: []
+        info: {}
     },
-    // extraReducers: (builder) => {
-    //     builder.addCase(getInfoUser.fulfilled, (state, action) => {
-    //         state.infoUser = action.payload
-    //     })
-    // }
-})
+    reducers: {
+        logout(state) {
+            state.info = ""
+        }
+    },
+    extraReducers: (builder) => {
+        builder.addCase(signin.fulfilled, (state, action) => {
+            state.info = action.payload
+        })
+    }
+});
+
+export const { logout } = userSlice.actions;
 
 export default userSlice.reducer;

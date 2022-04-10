@@ -6,6 +6,7 @@ import productSearchSlice from "../features/Product/productSearchSlice"
 import cartSlice from "../features/Cart/cartSlice"
 import billSlice from "../features/Bill/billSlice"
 import UserSlice from "../features/User/userSlice"
+import commentSlice from "../features/Comment/commentSlice"
 import { reducer as toastrReducer } from 'react-redux-toastr'
 
 const rootReducer = combineReducers({
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
     productSearch: productSearchSlice,
     cart: cartSlice,
     user: UserSlice,
-    bill: billSlice
+    bill: billSlice,
+    comment: commentSlice
 });
 
 

@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
-import { signin } from '../../../features/User/userSlice'
+import { logout, signin } from '../../../features/User/userSlice'
 import { getProductSearch } from '../../../features/Product/productSearchSlice'
 import { toastr } from 'react-redux-toastr';
 import { removeItemFromCart } from '../../../features/Cart/cartSlice';
@@ -20,6 +20,7 @@ const IconBar = () => {
     const [openInfoUser, setOpenInfoUser] = useState(false)
     const dataCart = useSelector(data => data.cart.items);
     const quantityCart = useSelector(data => data.cart.totalQuantity);
+    const user = useSelector(state => state.user.info);
     const { register, handleSubmit, formState } = useForm();
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -51,7 +52,7 @@ const IconBar = () => {
 
     const handleLogin = () => {
 
-        if (localStorage.getItem('user')) {
+        if (user) {
             if (!openInfoUser) {
                 setOpenInfoUser(true)
             } if (openSearch || openCart || openLogin) {
@@ -62,7 +63,7 @@ const IconBar = () => {
                 setOpenInfoUser(false)
             }
         } else {
-            if (!openLogin && !localStorage.getItem('user')) {
+            if (!openLogin && !user) {
                 setOpenLogin(true)
             } if (openSearch || openCart) {
                 setOpenSearch(false)
@@ -74,11 +75,8 @@ const IconBar = () => {
     }
 
     const Logout = () => {
-        if (localStorage.getItem('user')) {
-            localStorage.removeItem('user');
-            setOpenInfoUser(false)
-            navigate("/")
-        }
+        setOpenInfoUser(false);
+        dispatch(logout())
     }
 
     const onSubmit = (data) => {
@@ -205,9 +203,9 @@ const IconBar = () => {
                             <div className="p-[20px] w-full">
                                 <div className="block w-full">
                                     <p className="text-center text-[18px] color-[#000] border-b-[1px] border-solid pb-[5px]">THÔNG TIN TÀI KHOẢN</p>
-                                    <span className="font-bold text-[15px] my-[10px] block">{ localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')).user.name : "None" }</span>
+                                    <span className="font-bold text-[15px] my-[10px] block">{ user ? user.user.name : "None" }</span>
                                     <ul className="list-disc mx-[20px]">
-                                        <li className=""><Link to={ `/user/${localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')).user._id : "None"}` } className="hover:text-blue-400">Tài khoản của tôi</Link></li>
+                                        <li className=""><Link to={ `/user/${user ? user.user._id : "None"}` } className="hover:text-blue-400">Tài khoản của tôi</Link></li>
                                         <li className=""><button onClick={ () => Logout() } className="hover:text-blue-400">Đăng xuất</button></li>
                                     </ul>
                                 </div>

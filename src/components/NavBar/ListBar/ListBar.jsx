@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { MdKeyboardArrowDown } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, NavLink } from 'react-router-dom'
@@ -7,11 +7,13 @@ import { getCategory } from '../../../features/Category/category';
 
 const ListBar = () => {
     const dataCategory = useSelector(data => data.category.value);
+    const user = useSelector(state => state.user.info.user);
+    console.log(user)
     const dispatch = useDispatch()
 
     useEffect(() => {
         dispatch(getCategory())
-    }, [])
+    }, [user])
 
     return (
         <div className="flex mx-auto">
@@ -37,9 +39,14 @@ const ListBar = () => {
                 <li className="mx-[10px] color-[#252a2b]">
                     <NavLink to="/contact" className="nav-link">Liên hệ</NavLink>
                 </li>
-                <li className="mx-[10px] color-[#252a2b]">
-                    <NavLink to="/admin" className="nav-link">Admin</NavLink>
-                </li>
+                { user?.role === 1 ? (
+                    <li className="mx-[10px] color-[#252a2b]">
+                        <NavLink to="/admin" className="nav-link">Admin</NavLink>
+                    </li>
+                ) : (
+                    ""
+                ) }
+
             </ul>
         </div>
     )

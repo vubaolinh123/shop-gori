@@ -1,8 +1,45 @@
-import React from 'react'
-
+import React, { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { getAllBill } from "../../../features/Bill/billSlice"
+import { getCategory } from '../../../features/Category/category'
+import { getProducts } from '../../../features/Product/product'
+import { numberFormat } from '../../../config/numberFormat';
 
 
 const ThongKe = () => {
+    let pending = 0;
+    let success = 0;
+    let canncel = 0;
+    let cannced = 0;
+    let total = 0
+
+    const dispatch = useDispatch()
+    const dataProduct = useSelector(data => data.product.value)
+    const dataCategory = useSelector(data => data.category.value)
+    const dataBill = useSelector(data => data.bill.value)
+
+    dataBill.forEach((bill) => {
+        if (bill.status === 0) {
+            pending++
+        }
+        if (bill.status === 2) {
+            success++
+        }
+        if (bill.status == 3) {
+            canncel++
+        }
+        if (bill.status == 4) {
+            cannced++
+        }
+        total += bill.total
+    })
+
+    useEffect(() => {
+        dispatch(getAllBill())
+        dispatch(getCategory())
+        dispatch(getProducts())
+    }, [])
+
     return (
         <div>
             <header className="bg-white shadow">
@@ -33,7 +70,7 @@ const ThongKe = () => {
                                                         Tổng Sản Phẩm
                                                     </p>
                                                     <p className="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                                                        10
+                                                        { dataProduct && dataProduct.length }
                                                     </p>
                                                 </div>
                                             </div>
@@ -49,10 +86,10 @@ const ThongKe = () => {
                                                 </div>
                                                 <div>
                                                     <p className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                                                        Thu Nhập
+                                                        Tổng Thu Nhập
                                                     </p>
                                                     <p className="text-lg font-semibold text-gray-700 dark:text-gray-200 renderThuNhap">
-                                                        $ 46,760.89
+                                                        { numberFormat.format(total) }
                                                     </p>
                                                 </div>
                                             </div>
@@ -72,7 +109,7 @@ const ThongKe = () => {
                                                         Tổng Đơn Hàng
                                                     </p>
                                                     <p className="text-lg font-semibold text-gray-700 dark:text-gray-200 renderAllBill">
-                                                        376
+                                                        { dataBill && dataBill.length }
                                                     </p>
                                                 </div>
                                             </div>
@@ -90,13 +127,28 @@ const ThongKe = () => {
                                                         Đơn Hàng Đang Chờ
                                                     </p>
                                                     <p className="text-lg font-semibold text-gray-700 dark:text-gray-200 renderPending">
-                                                        35
+                                                        { pending }
                                                     </p>
                                                 </div>
                                             </div>
 
                                             <div className="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
-
+                                                <div
+                                                    className="p-3 mr-4 text-orange-500 bg-orange-100 rounded-full dark:text-orange-100 dark:bg-orange-500">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                                        className="bi bi-shop-window" viewBox="0 0 16 16">
+                                                        <path
+                                                            d="M2.97 1.35A1 1 0 0 1 3.73 1h8.54a1 1 0 0 1 .76.35l2.609 3.044A1.5 1.5 0 0 1 16 5.37v.255a2.375 2.375 0 0 1-4.25 1.458A2.371 2.371 0 0 1 9.875 8 2.37 2.37 0 0 1 8 7.083 2.37 2.37 0 0 1 6.125 8a2.37 2.37 0 0 1-1.875-.917A2.375 2.375 0 0 1 0 5.625V5.37a1.5 1.5 0 0 1 .361-.976l2.61-3.045zm1.78 4.275a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 1 0 2.75 0V5.37a.5.5 0 0 0-.12-.325L12.27 2H3.73L1.12 5.045A.5.5 0 0 0 1 5.37v.255a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0zM1.5 8.5A.5.5 0 0 1 2 9v6h12V9a.5.5 0 0 1 1 0v6h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1V9a.5.5 0 0 1 .5-.5zm2 .5a.5.5 0 0 1 .5.5V13h8V9.5a.5.5 0 0 1 1 0V13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5a.5.5 0 0 1 .5-.5z" />
+                                                    </svg>
+                                                </div>
+                                                <div>
+                                                    <p className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
+                                                        Tổng Sản Danh Mục
+                                                    </p>
+                                                    <p className="text-lg font-semibold text-gray-700 dark:text-gray-200">
+                                                        { dataCategory && dataCategory.length }
+                                                    </p>
+                                                </div>
                                             </div>
 
                                             <div className="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
@@ -115,7 +167,7 @@ const ThongKe = () => {
                                                         Đơn Hàng Thành Công
                                                     </p>
                                                     <p className="text-lg font-semibold text-gray-700 dark:text-gray-200 renderSuccess">
-                                                        $ 46,760.89
+                                                        { success }
                                                     </p>
                                                 </div>
                                             </div>
@@ -131,15 +183,31 @@ const ThongKe = () => {
                                                 </div>
                                                 <div>
                                                     <p className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                                                        Đơn Hàng Thất Bại
+                                                        Đơn Hàng Admin Hủy
                                                     </p>
                                                     <p className="text-lg font-semibold text-gray-700 dark:text-gray-200 renderCanncel">
-                                                        376
+                                                        { canncel }
                                                     </p>
                                                 </div>
                                             </div>
                                             <div className="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
-
+                                                <div className="p-3 mr-4 text-red-500 bg-red-100 rounded-full dark:text-blue-100 dark:bg-red-500">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                                        className="bi bi-x-lg" viewBox="0 0 16 16">
+                                                        <path fill-rule="evenodd"
+                                                            d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z" />
+                                                        <path fill-rule="evenodd"
+                                                            d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z" />
+                                                    </svg>
+                                                </div>
+                                                <div>
+                                                    <p className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
+                                                        Đơn Hàng Bị Hủy
+                                                    </p>
+                                                    <p className="text-lg font-semibold text-gray-700 dark:text-gray-200 renderCanncel">
+                                                        { cannced }
+                                                    </p>
+                                                </div>
                                             </div>
 
                                         </div>

@@ -66,6 +66,7 @@ const productSlice = createSlice({
     name: "product",
     initialState: {
         value: [],
+        valueOne: [],
         valueLimitPage: [],
         status: null
     },

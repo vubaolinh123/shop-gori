@@ -67,7 +67,7 @@ const Hoodie = () => {
 
                     <div className="mt-[40px] pt-[15px]">
                         <div className="w-full flex justify-center cursor-pointer text-[18px] font-bold text-[#000]">
-                            <Link to="/product" className="py-[10px] px-[30px] border-black border rounded-md transition-all duration-300 hover:text-[#2962ff] hover:border-[#2962ff]">
+                            <Link to="/products/1" className="py-[10px] px-[30px] border-black border rounded-md transition-all duration-300 hover:text-[#2962ff] hover:border-[#2962ff]">
                                 XEM TẤT CẢ SẢN PHẨM
                             </Link>
                         </div>
