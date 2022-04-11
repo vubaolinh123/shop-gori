@@ -24,6 +24,7 @@ export const signin = createAsyncThunk(
         try {
             const { data } = await login(userData);
             toastr.success("Thông Báo", "Đăng nhập thành công");
+            localStorage.setItem('user', JSON.stringify(data));
             return data;
         } catch (error) {
             toastr.error("Đăng nhập thất bại", error.response.data.message);
@@ -41,6 +42,7 @@ const userSlice = createSlice({
     reducers: {
         logout(state) {
             state.info = ""
+            localStorage.removeItem('user');
         }
     },
     extraReducers: (builder) => {

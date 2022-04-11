@@ -22,5 +22,8 @@ export const read = (id) => {
 
 export const update = (comment) => {
     const url = `/comment/${comment._id}`;
-    return instance.put(url, comment);
+    const commentUpdate = {
+        comment: comment.comment
+    }
+    return instance.put(url, commentUpdate);
 }

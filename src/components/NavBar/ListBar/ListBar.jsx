@@ -8,7 +8,6 @@ import { getCategory } from '../../../features/Category/category';
 const ListBar = () => {
     const dataCategory = useSelector(data => data.category.value);
     const user = useSelector(state => state.user.info.user);
-    console.log(user)
     const dispatch = useDispatch()
 
     useEffect(() => {
