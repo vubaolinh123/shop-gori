@@ -11,7 +11,6 @@ const Comment = () => {
     const [valueUpdateComment, setValueUpdateComment] = useState("")
     const [openUpdateComment, setOpenUpdateComment] = useState(false)
     const [selectInputCommentId, setSelectInputCommentId] = useState('')
-    const [Comment, setComment] = useState([])
     const { register, handleSubmit, formState: { errors } } = useForm()
     const commentValue = useSelector(data => data.comment.value)
     const currentProductValue = useSelector(data => data.product.value)
@@ -27,7 +26,6 @@ const Comment = () => {
             User: user._id
         }
         dispatch(addComment(dataComment))
-        setComment(dataComment)
         console.log("Render sau khi add", commentValue);
     }
 
@@ -67,7 +65,7 @@ const Comment = () => {
     useEffect(() => {
         dispatch(getAllComment())
         dispatch(getOneProducts(id))
-    }, [id, Comment])
+    }, [id])
 
 
     return (
@@ -97,11 +95,12 @@ const Comment = () => {
                                     { user?._id === comment.User._id && (
                                         <div className="inline-block">
                                             { selectInputCommentId === comment._id && openUpdateComment ? (
-                                                <div className="mb-[20px]">
-                                                    <form action="" className="" onSubmit={ UpdateCommentFormSubmit }>
+                                                <div className="mb-[20px] relative">
+                                                    <form action="" className="inline-block" onSubmit={ UpdateCommentFormSubmit } >
                                                         <textarea className="w-full rounded border-[3px] border-black h-[80px]" value={ valueUpdateComment } onChange={ handleChangeValueTextArena }  ></textarea>
                                                         <button className="border border-black rounded text-[15px] px-[7px] py-[5px] inline-block mt-[10px] bg-blue-500 text-white">Cập Nhật</button>
                                                     </form>
+                                                    <button className="absolute top-[86px] left-[90px] border border-black rounded text-[15px] px-[7px] py-[5px] inline-block mt-[10px] bg-blue-500 text-white " onClick={ () => setOpenUpdateComment(false) }>Hủy</button>
                                                 </div>
                                             ) : (
                                                 <button className="mr-[10px]" onClick={ () => showFormUpdate(comment._id) }>Chỉnh Sửa</button>

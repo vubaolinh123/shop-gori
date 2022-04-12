@@ -24,6 +24,7 @@ import Bill from './components/Admin/Bill/Bill'
 import DetailBill from './components/Admin/Bill/DetailBill'
 import InfoUser from "./components/User/InfoUser"
 import DetailBillUser from './components/User/DetailBillUser'
+import User from './components/Admin/User/User'
 
 
 function App() {
@@ -54,6 +55,7 @@ function App() {
             <Route path="product/:id/edit" element={ < EditSanPham /> }></Route >
             <Route path="bill" element={ <Bill /> }></Route>
             <Route path=":id/detailBill" element={ <DetailBill /> }></Route>
+            <Route path="user" element={ <User /> }></Route>
           </Route>
           <Route path="*" element={ <Page404 /> } />
         </Routes>

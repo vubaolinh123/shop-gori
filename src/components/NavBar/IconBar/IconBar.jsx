@@ -63,6 +63,8 @@ const IconBar = () => {
                 setOpenInfoUser(false)
             }
         } else {
+            console.log("user", user);
+            console.log(!openLogin,);
             if (!openLogin && !user) {
                 setOpenLogin(true)
             } if (openSearch || openCart) {
@@ -203,9 +205,9 @@ const IconBar = () => {
                             <div className="p-[20px] w-full">
                                 <div className="block w-full">
                                     <p className="text-center text-[18px] color-[#000] border-b-[1px] border-solid pb-[5px]">THÔNG TIN TÀI KHOẢN</p>
-                                    <span className="font-bold text-[15px] my-[10px] block">{ user ? user.user.name : "None" }</span>
+                                    <span className="font-bold text-[15px] my-[10px] block">{ user ? user.user?.name : "None" }</span>
                                     <ul className="list-disc mx-[20px]">
-                                        <li className=""><Link to={ `/user/${user ? user.user._id : "None"}` } className="hover:text-blue-400">Tài khoản của tôi</Link></li>
+                                        <li className=""><Link to={ `/user/${user ? user.user?._id : "None"}` } className="hover:text-blue-400">Tài khoản của tôi</Link></li>
                                         <li className=""><button onClick={ () => Logout() } className="hover:text-blue-400">Đăng xuất</button></li>
                                     </ul>
                                 </div>

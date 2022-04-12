@@ -22,6 +22,8 @@ const NavBar = () => {
 
                                 <NavLink to="/admin/bill" className="navlinkadmin text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Đơn Hàng</NavLink>
 
+                                <NavLink to="/admin/user" className="navlinkadmin text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Tài Khoản</NavLink>
+
 
                             </div>
                         </div>

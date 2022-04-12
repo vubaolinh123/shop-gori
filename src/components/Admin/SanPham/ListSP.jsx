@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { numberFormat } from '../../../config/numberFormat';
-import {  useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { getProducts, removeProducts } from '../../../features/Product/product';
 import { toastr } from 'react-redux-toastr';
 
@@ -10,16 +10,15 @@ const ListSP = () => {
     const dataProduct = useSelector(data => data.product.value);
     const dispatch = useDispatch();
 
-    const onRemoveProduct = (id)=>{
-        
+    const onRemoveProduct = (id) => {
         const toastrConfirmOptions = {
-            onOk: () => dispatch(removeProducts(id)) ,
+            onOk: () => dispatch(removeProducts(id)),
             onCancel: () => console.log('CANCEL: clicked')
         };
         toastr.confirm('Bạn Muốn Xóa Sản Phẩm?', toastrConfirmOptions);
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(getProducts());
     }, [])
 
@@ -85,35 +84,35 @@ const ListSP = () => {
                                         </thead>
                                         <tbody className="bg-white divide-y divide-gray-200">
 
-                                            {dataProduct && dataProduct?.map((data,index)=>(
-                                            <tr key={data._id}>
-                                                <td className="px-6 py-4 whitespace-nowrap">{index+1}</td>
-                                                <td className="px-6 py-4 whitespace-nowrap">{data.name.substr(0, 20)}..</td>
-                                                <td className="px-6 py-4 whitespace-nowrap"><img src={data.image} alt=""
-                                                    width="100" /></td>
-                                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500  "><span
-                                                    className="">{data.desc.substr(0, 15)}...</span></td>
-                                                <td className="px-6 py-4 whitespace-nowrap">
-                                                    {data.CategoryProduct?.name}
-                                                </td>
-                                                <td className="px-6 py-4 whitespace-nowrap">
-                                                    {100-Math.round((data.price/ data.oldPrice)*100)}%
-                                                </td>
-                                                <td className="px-6 py-4 whitespace-nowrap">{numberFormat.format(data.price)}</td>
-                                                <td className="px-6 py-4 whitespace-nowrap">{numberFormat.format(data.oldPrice)}
-                                                </td>
-                                                {data.status === 1 ? <td className="px-6 py-4 whitespace-nowrap bg-red-500 text-white font-bold">Hết Hàng</td>
-                                                 : 
-                                                 <td className="px-6 py-4 whitespace-nowrap bg-green-500 text-white font-bold">Còn Hàng</td>
-                                                }
-                                                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                    <Link to={`/admin/product/${data?._id}/edit`}
-                                                        className="text-indigo-600 hover:text-indigo-900 font-bold inline-block mx-[5px]">Cập Nhật</Link>
-                                                    <button onClick={() =>onRemoveProduct(data?._id)}
-                                                        className="text-red-600 hover:text-red-900 font-bold inline-block">Xóa</button>
-                                                </td>
-                                            </tr>
-                                            ))}
+                                            { dataProduct && dataProduct?.map((data, index) => (
+                                                <tr key={ data._id }>
+                                                    <td className="px-6 py-4 whitespace-nowrap">{ index + 1 }</td>
+                                                    <td className="px-6 py-4 whitespace-nowrap">{ data.name.substr(0, 20) }..</td>
+                                                    <td className="px-6 py-4 whitespace-nowrap"><img src={ data.image } alt=""
+                                                        width="100" /></td>
+                                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500  "><span
+                                                        className="">{ data.desc.substr(0, 15) }...</span></td>
+                                                    <td className="px-6 py-4 whitespace-nowrap">
+                                                        { data.CategoryProduct?.name }
+                                                    </td>
+                                                    <td className="px-6 py-4 whitespace-nowrap">
+                                                        { 100 - Math.round((data.price / data.oldPrice) * 100) }%
+                                                    </td>
+                                                    <td className="px-6 py-4 whitespace-nowrap">{ numberFormat.format(data.price) }</td>
+                                                    <td className="px-6 py-4 whitespace-nowrap">{ numberFormat.format(data.oldPrice) }
+                                                    </td>
+                                                    { data.status === 1 ? <td className="px-6 py-4 whitespace-nowrap bg-red-500 text-white font-bold">Hết Hàng</td>
+                                                        :
+                                                        <td className="px-6 py-4 whitespace-nowrap bg-green-500 text-white font-bold">Còn Hàng</td>
+                                                    }
+                                                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                        <Link to={ `/admin/product/${data?._id}/edit` }
+                                                            className="text-indigo-600 hover:text-indigo-900 font-bold inline-block mx-[5px]">Cập Nhật</Link>
+                                                        <button onClick={ () => onRemoveProduct(data?._id) }
+                                                            className="text-red-600 hover:text-red-900 font-bold inline-block">Xóa</button>
+                                                    </td>
+                                                </tr>
+                                            )) }
 
                                         </tbody>
                                     </table>

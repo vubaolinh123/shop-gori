@@ -12,7 +12,6 @@ const CheckOut = () => {
     const { register, handleSubmit, formState: { errors } } = useForm()
     let totalCart = 0;
     const dataCart = useSelector(data => data.cart.items);
-    const quantityCart = useSelector(data => data.cart.totalQuantity);
     const dispatch = useDispatch()
     const navigate = useNavigate()
 

@@ -24,14 +24,14 @@ const ThongKe = () => {
         }
         if (bill.status === 2) {
             success++
+            total += bill.total
         }
-        if (bill.status == 3) {
+        if (bill.status === 3) {
             canncel++
         }
-        if (bill.status == 4) {
+        if (bill.status === 4) {
             cannced++
         }
-        total += bill.total
     })
 
     useEffect(() => {

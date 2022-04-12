@@ -1,18 +1,19 @@
 import instance from "./instance";
 
 
+
 export const list = () => {
-    const url = `/categoryPros`;
+    const url = `/user`;
     return instance.get(url);
 }
 export const remove = (id) => {
-    const url = `/categoryPro/${id}`;
+    const url = `/user/${id}`;
     return instance.delete(url);
 }
 
-export const add = (category) => {
-    const url = `/categoryPro`;
-    return instance.post(url, category);
+export const update = (status, id) => {
+    const url = `/user/${id}`;
+    return instance.put(url, status);
 }
 
 export const read = (id) => {
