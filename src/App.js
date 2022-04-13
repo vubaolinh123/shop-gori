@@ -25,6 +25,9 @@ import DetailBill from './components/Admin/Bill/DetailBill'
 import InfoUser from "./components/User/InfoUser"
 import DetailBillUser from './components/User/DetailBillUser'
 import User from './components/Admin/User/User'
+import UserComment from './components/Admin/User/UserComment'
+import Voucher from './components/Admin/Voucher/Voucher'
+import AddVoucher from './components/Admin/Voucher/AddVoucher'
 
 
 function App() {
@@ -56,6 +59,9 @@ function App() {
             <Route path="bill" element={ <Bill /> }></Route>
             <Route path=":id/detailBill" element={ <DetailBill /> }></Route>
             <Route path="user" element={ <User /> }></Route>
+            <Route path="user/:id" element={ <UserComment /> }></Route>
+            <Route path="voucher" element={ <Voucher /> }></Route>
+            <Route path="voucher/add" element={ <AddVoucher /> }></Route>
           </Route>
           <Route path="*" element={ <Page404 /> } />
         </Routes>

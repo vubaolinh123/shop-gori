@@ -1,14 +1,18 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux'
 import { toastr } from 'react-redux-toastr';
 import { Link, useNavigate } from 'react-router-dom';
 import { addDetailBill } from '../../api/detailOrder';
 import { add } from '../../api/infoOder';
+import { list, read } from '../../api/voucher';
 import { numberFormat } from '../../config/numberFormat';
 import { resetCart } from '../../features/Cart/cartSlice';
+import { updateVoucher } from '../../features/Voucher/voucher';
 
 const CheckOut = () => {
+    const [valueVoucher, setValueVoucher] = useState("")
+    let [priceVoucher, setPriceVoucher] = useState(0)
     const { register, handleSubmit, formState: { errors } } = useForm()
     let totalCart = 0;
     const dataCart = useSelector(data => data.cart.items);
@@ -17,8 +21,6 @@ const CheckOut = () => {
 
     const addOder = (value) => {
         let infoOder = []
-
-
         if (localStorage.getItem('user')) {
             let idUser = JSON.parse(localStorage.getItem('user')).user._id
             infoOder = {
@@ -40,8 +42,6 @@ const CheckOut = () => {
                 total: totalCart,
             }
         }
-        console.log(infoOder);
-
 
         const addOrder = async () => {
             if (dataCart.length > 0) {
@@ -70,12 +70,44 @@ const CheckOut = () => {
             }
         }
         addOrder()
+    }
 
+    const AddVoucherSubmit = async (e) => {
+        // Click submit sẽ lấy value từ state textarena vào đây xử lý
+        e.preventDefault()
+        let decQuantityVoucher = {}
+        try {
+            const { data } = await read(valueVoucher);
+            console.log("dataVoucher", data);
+            if (data.voucher.used < 1) {
+                decQuantityVoucher = {
+                    _id: data.voucher._id,
+                    name: data.voucher.name,
+                    priceSale: data.voucher.priceSale,
+                    used: 0
+                }
+            }
+            decQuantityVoucher = {
+                _id: data.voucher._id,
+                name: data.voucher.name,
+                priceSale: data.voucher.priceSale,
+                used: data.voucher.used - 1
+            }
+            dispatch(updateVoucher(decQuantityVoucher))
+            setPriceVoucher(priceVoucher += data.voucher.priceSale)
+            toastr.success("Thông Báo", "Áp dụng Voucher thành công")
+        } catch (error) {
+            toastr.error("Thông Báo", error.response.data.error)
+        }
+    }
+
+    const handleChangeValueVoucher = (event) => {
+        setValueVoucher(event.target.value);
     }
 
     useEffect(() => {
 
-    }, [])
+    }, [priceVoucher])
 
     return (
         <>
@@ -150,18 +182,27 @@ const CheckOut = () => {
                                 ) }
                             </div>
                             <div className="my-4 border border-b-2 border-x-0  border-t-0 py-5">
+                                <div className="">
+                                    <form action="" onSubmit={ AddVoucherSubmit }>
+                                        <h2 className="font-bold text-[25px]">Nhập mã giảm giá</h2>
+                                        <input type="text" value={ valueVoucher } onChange={ handleChangeValueVoucher } className="border border-black px-[10px] py-[5px]" placeholder="Mã giảm giá" />
+                                        <button className="inline-block text-white bg-red-500 ml-[15px] px-[10px] py-[5px] rounded">Nhập</button>
+                                    </form>
+                                </div>
+                            </div>
+                            <div className="my-4 border border-b-2 border-x-0  border-t-0 py-5">
                                 <div className="grid grid-cols-2">
                                     <div className="">
                                         <span className="text-[#717171] text-lg">Tạm tính</span>
                                     </div>
                                     <div className="text-right font-bold">
-                                        <span className="tamtinh"></span>
+                                        <span className="tamtinh">{ dataCart && dataCart.forEach((data) => { totalCart += data.total }) } { numberFormat.format(totalCart) }</span>
                                     </div>
                                     <div className="">
-                                        <span className="text-[#717171] text-lg">Phí vận chuyển</span>
+                                        <span className="text-[#717171] text-lg">Mã Giảm Giá</span>
                                     </div>
                                     <div className="text-right font-bold">
-                                        <span className="">--</span>
+                                        <span className="">{ numberFormat.format(priceVoucher) }</span>
                                     </div>
                                 </div>
                             </div>
@@ -170,7 +211,7 @@ const CheckOut = () => {
                                     <span className="text-[#717171] text-xl">Tổng Cộng</span>
                                 </div>
                                 <div className="text-right font-bold text-2xl">
-                                    <span className="text-red-500">{ dataCart && dataCart.forEach((data) => { totalCart += data.total }) } { numberFormat.format(totalCart) }</span>
+                                    <span className="text-red-500"> { numberFormat.format(totalCart -= priceVoucher) }</span>
                                 </div>
                             </div>
                         </div>

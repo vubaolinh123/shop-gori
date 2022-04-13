@@ -72,6 +72,18 @@ export const deleteUser = createAsyncThunk(
     }
 )
 
+export const getOneUser = createAsyncThunk(
+    "user/getOneUser",
+    async (id, thunkAPI) => {
+        try {
+            const { data } = await read(id)
+            return data
+        } catch (error) {
+            console.log("UserSliceGetOne", error);
+        }
+    }
+)
+
 
 
 
@@ -79,7 +91,8 @@ const userSlice = createSlice({
     name: "user",
     initialState: {
         info: "",
-        value: []
+        value: [],
+        comment: []
     },
     reducers: {
         logout(state) {
@@ -108,6 +121,10 @@ const userSlice = createSlice({
         builder.addCase(deleteUser.fulfilled, (state, action) => {
             state.value = state.value.filter(item => item._id !== action.payload._id)
         })
+        builder.addCase(getOneUser.fulfilled, (state, action) => {
+            state.comment = action.payload
+        })
+
     }
 });
 

@@ -7,7 +7,7 @@ import { getAllBill } from '../../../features/Bill/billSlice'
 import { updateStatusBill } from '../../../features/Cart/cartSlice'
 
 const Bill = () => {
-    let [reRenderPage, setReRenderPage] = useState(0)
+    const [reRenderPage, setReRenderPage] = useState([])
     const valueBill = useSelector(data => data.bill.value)
     const dispatch = useDispatch()
 
@@ -19,12 +19,11 @@ const Bill = () => {
             id
         }
         dispatch(updateStatusBill(bill))
-        setReRenderPage(reRenderPage++)
+        setReRenderPage(bill)
     }
 
     useEffect(() => {
         dispatch(getAllBill())
-        setReRenderPage(reRenderPage++)
     }, [reRenderPage])
 
     return (

@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
-import { logout, signin } from '../../../features/User/userSlice'
+import { logout, signin } from '../../../features/Voucher/userSlice'
 import { getProductSearch } from '../../../features/Product/productSearchSlice'
 import { toastr } from 'react-redux-toastr';
 import { removeItemFromCart } from '../../../features/Cart/cartSlice';

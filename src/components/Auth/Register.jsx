@@ -2,7 +2,7 @@ import React from 'react'
 import { toastr } from 'react-redux-toastr'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
-import { signup } from '../../features/User/userSlice'
+import { signup } from '../../features/Voucher/userSlice'
 import { useNavigate } from 'react-router-dom'
 
 

@@ -5,8 +5,9 @@ import proincateSlice from "../features/Category/ProInCate"
 import productSearchSlice from "../features/Product/productSearchSlice"
 import cartSlice from "../features/Cart/cartSlice"
 import billSlice from "../features/Bill/billSlice"
-import UserSlice from "../features/User/userSlice"
+import UserSlice from "./Voucher/userSlice"
 import commentSlice from "../features/Comment/commentSlice"
+import voucherSlice from "../features/Voucher/voucher"
 import { reducer as toastrReducer } from 'react-redux-toastr'
 
 const rootReducer = combineReducers({
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
     cart: cartSlice,
     user: UserSlice,
     bill: billSlice,
-    comment: commentSlice
+    comment: commentSlice,
+    voucher: voucherSlice
 });
 
 

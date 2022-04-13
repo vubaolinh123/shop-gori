@@ -1,11 +1,14 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { toastr } from 'react-redux-toastr'
-import { deleteUser, getAllUser, updateStatusUser } from '../../../features/User/userSlice'
+import { Link } from 'react-router-dom'
+import { getAllComment } from '../../../features/Comment/commentSlice'
+import { deleteUser, getAllUser, updateStatusUser } from '../../../features/Voucher/userSlice'
 
 const User = () => {
     const dispatch = useDispatch()
     const dataUser = useSelector(data => data.user.value)
+    const dataComment = useSelector(data => data.comment.value)
 
     const handleOnChange = (value, id) => {
         const StatusUser = {
@@ -36,7 +39,7 @@ const User = () => {
         <div>
             <header className="bg-white shadow">
                 <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 grid grid-cols-2">
-                    <h1 className="text-3xl font-bold text-gray-900">Quản Trị Đơn Hàng</h1>
+                    <h1 className="text-3xl font-bold text-gray-900">Quản Trị Tài Khoản</h1>
                 </div>
             </header>
             <main>
@@ -67,6 +70,10 @@ const User = () => {
                                                 <th scope="col"
                                                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                     Trạng Thái
+                                                </th>
+                                                <th scope="col"
+                                                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    Bình Luận
                                                 </th>
                                                 <th scope="col"
                                                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -104,6 +111,7 @@ const User = () => {
                                                             })()
                                                         }
                                                     </td>
+                                                    <td className="px-6 py-4 whitespace-nowrap"> <Link to={ `${data._id}` } className="text-blue-500 font-bold">Xem Bình Luận</Link> </td>
                                                     <td className="px-6 py-4 whitespace-nowrap"> <button className="text-red-500 font-bold" onClick={ () => HandledeleteUser(data._id) }>Xóa</button> </td>
                                                 </tr>
                                             )) }

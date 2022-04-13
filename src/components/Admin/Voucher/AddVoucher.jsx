@@ -1,0 +1,80 @@
+import React from 'react'
+import { useForm, SubmitHandler } from "react-hook-form"
+import { useDispatch } from 'react-redux';
+import { toastr } from 'react-redux-toastr';
+import { useNavigate } from "react-router-dom"
+import { addVoucher } from '../../../features/Voucher/voucher';
+
+const AddVoucher = () => {
+
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const onSubmit = (data) => {
+        dispatch(addVoucher(data));
+        navigate("/admin/voucher")
+    }
+
+
+    return (
+        <div>
+            <header className="bg-white shadow">
+                <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                    <h1 className="text-3xl font-bold text-gray-900">Thêm Mới Voucher</h1>
+                </div>
+            </header>
+            <main>
+                <div className="max-w-7xl mx-auto py-6 ">
+
+                    <div className="flex flex-col">
+                        <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                            <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                                <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                                    <form action="" id="form-add-post" onSubmit={ handleSubmit(onSubmit) }>
+                                        <div className="shadow overflow-hidden sm:rounded-md">
+                                            <div className="px-4 py-5 bg-white sm:p-6">
+                                                <div className="grid grid-cols-6 gap-6">
+
+                                                    <div className="col-span-6 sm:col-span-3">
+                                                        <label className="block text-sm font-medium text-gray-700">Tên Mã Voucher</label>
+                                                        <input type="text" name="category-name" id="category-name" placeholder="Nhập mã voucher" { ...register('name', { required: true }) }
+                                                            className="mt-1 py-2 px-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                                                        { errors.name && <span className="text-red-500 block my-[5px] text-[15px]">Vui lòng nhập mã voucher</span> }
+                                                    </div>
+
+                                                    <div className="col-span-6 sm:col-span-3">
+                                                        <label className="block text-sm font-medium text-gray-700">Giá Giảm</label>
+                                                        <input type="number" name="category-name" id="category-name" placeholder="Nhập giá được giảm" { ...register('priceSale', { required: true }) }
+                                                            className="mt-1 py-2 px-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                                                        { errors.priceSale && <span className="text-red-500 block my-[5px] text-[15px]">Vui lòng nhập giá được giảm</span> }
+                                                    </div>
+
+                                                    <div className="col-span-6 sm:col-span-3">
+                                                        <label className="block text-sm font-medium text-gray-700">Số Lần Sử Dụng</label>
+                                                        <input type="number" name="category-name" id="category-name" placeholder="Nhập số lần sử dụng" { ...register('used', { required: true }) }
+                                                            className="mt-1 py-2 px-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                                                        { errors.used && <span className="text-red-500 block my-[5px] text-[15px]">Vui lòng nhập số lần sử dụng</span> }
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
+                                                <button
+                                                    className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                                    Thêm Mới
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    )
+}
+
+export default AddVoucher

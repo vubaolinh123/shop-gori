@@ -11,6 +11,7 @@ const Comment = () => {
     const [valueUpdateComment, setValueUpdateComment] = useState("")
     const [openUpdateComment, setOpenUpdateComment] = useState(false)
     const [selectInputCommentId, setSelectInputCommentId] = useState('')
+    const [comment, setComment] = useState([])
     const { register, handleSubmit, formState: { errors } } = useForm()
     const commentValue = useSelector(data => data.comment.value)
     const currentProductValue = useSelector(data => data.product.value)
@@ -26,7 +27,8 @@ const Comment = () => {
             User: user._id
         }
         dispatch(addComment(dataComment))
-        console.log("Render sau khi add", commentValue);
+        toastr.success("Bình Luận", "Bình luận thành công")
+        setComment(dataComment)
     }
 
     const deleteComment = (idComment) => {
@@ -60,12 +62,13 @@ const Comment = () => {
         dispatch(updateComment(infoCommentUpdate))
         toastr.success("Bình Luận", "Cập nhật bình luận thành công")
         setValueUpdateComment("")
+        setComment(infoCommentUpdate)
     }
 
     useEffect(() => {
         dispatch(getAllComment())
         dispatch(getOneProducts(id))
-    }, [id])
+    }, [id, comment])
 
 
     return (

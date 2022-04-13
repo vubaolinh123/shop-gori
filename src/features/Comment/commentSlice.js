@@ -42,10 +42,10 @@ const commentSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(getAllComment.fulfilled, (state, action) => {
-            console.log("actionPayload", action.payload);
             state.value = action.payload
         })
         builder.addCase(addComment.fulfilled, (state, action) => {
+            console.log(action);
             state.value.push(action.payload)
         })
         builder.addCase(removeComment.fulfilled, (state, action) => {
