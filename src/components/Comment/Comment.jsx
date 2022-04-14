@@ -12,7 +12,7 @@ const Comment = () => {
     const [openUpdateComment, setOpenUpdateComment] = useState(false)
     const [selectInputCommentId, setSelectInputCommentId] = useState('')
     const [comment, setComment] = useState([])
-    const { register, handleSubmit, formState: { errors } } = useForm()
+    const { register, handleSubmit, formState: { errors }, reset } = useForm()
     const commentValue = useSelector(data => data.comment.value)
     const currentProductValue = useSelector(data => data.product.value)
     const user = useSelector(state => state.user.info.user);
@@ -29,6 +29,9 @@ const Comment = () => {
         dispatch(addComment(dataComment))
         toastr.success("Bình Luận", "Bình luận thành công")
         setComment(dataComment)
+        reset({
+            comment: ""
+        });
     }
 
     const deleteComment = (idComment) => {

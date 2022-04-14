@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { toastr } from 'react-redux-toastr'
 import { Link } from 'react-router-dom'
@@ -6,6 +6,7 @@ import { getAllComment } from '../../../features/Comment/commentSlice'
 import { deleteUser, getAllUser, updateStatusUser } from '../../../features/Voucher/userSlice'
 
 const User = () => {
+    const [statusUser, setStatusUser] = useState([])
     const dispatch = useDispatch()
     const dataUser = useSelector(data => data.user.value)
     const dataComment = useSelector(data => data.comment.value)
@@ -18,6 +19,7 @@ const User = () => {
             id
         }
         dispatch(updateStatusUser(StatusUser))
+        setStatusUser(StatusUser)
     }
 
     const HandledeleteUser = (id) => {
@@ -32,7 +34,7 @@ const User = () => {
 
     useEffect(() => {
         dispatch(getAllUser())
-    }, [])
+    }, [statusUser])
 
 
     return (
