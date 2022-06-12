@@ -23,6 +23,7 @@ const DetailProduct = () => {
     const IdCate = dataProduct.CategoryProduct;
     const { id } = useParams();
 
+
     const AddCard = (data) => {
         const infoCart = {
             _id: dataProduct._id + data.size,
@@ -60,7 +61,9 @@ const DetailProduct = () => {
             setProduct(data)
         }
         getOneProduct()
-        dispatch(getProductInCategory(IdCate));
+        if (IdCate != undefined) {
+            dispatch(getProductInCategory(IdCate));
+        }
 
     }, [id, IdCate])
 
@@ -161,7 +164,7 @@ const DetailProduct = () => {
                 </div>
             </div>
             {/* Hiển thị Comment */ }
-            <Comment />
+            {/* <Comment /> */ }
             {/* Hiển thị Comment */ }
             <div className="w-full  bg-white mb-[20px]  pb-[30px]">
                 <div className="  w-[1170px] mx-auto ">
