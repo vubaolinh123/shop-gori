@@ -164,7 +164,7 @@ const DetailProduct = () => {
                 </div>
             </div>
             {/* Hiển thị Comment */ }
-            {/* <Comment /> */ }
+            <Comment />
             {/* Hiển thị Comment */ }
             <div className="w-full  bg-white mb-[20px]  pb-[30px]">
                 <div className="  w-[1170px] mx-auto ">

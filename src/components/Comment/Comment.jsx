@@ -71,6 +71,7 @@ const Comment = () => {
     useEffect(() => {
         dispatch(getAllComment())
         dispatch(getOneProducts(id))
+
     }, [id, comment])
 
 
@@ -90,17 +91,17 @@ const Comment = () => {
                     <div className="text-red-500 font-bold text-[25px] my-[20px]">Vui lòng đăng nhập để bình luận</div>
                 ) }
                 <div className="">
-                    { commentValue && commentValue.map((comment) => (
-                        comment.Product._id === currentProductValue._id && (
+                    { commentValue && commentValue.length > 0 && commentValue.map((comment) => (
+                        comment.Product?._id === currentProductValue._id && (
                             <div className="my-[10px] relative Comment max-w-full">
                                 <img src="https://i.imgur.com/YfvwwmW.png" alt="" width="80" className="rounded-[100px] inline-block" />
-                                <span className="absolute text-blue-500 font-bold text-[18px] top-[5px] left-[83px]">{ comment.User.name } <span className="text-black text-[16px]">{ comment?.createdAt.slice(0, -5) }</span></span>
-                                <p className="absolute top-[32px] left-[82px] text-[15px]">{ comment.comment }</p>
+                                <span className="absolute text-blue-500 font-bold text-[18px] top-[5px] left-[83px]">{ comment?.User.name } <span className="text-black text-[16px]">{ comment?.createdAt.slice(0, -5) }</span></span>
+                                <p className="absolute top-[32px] left-[82px] text-[15px]">{ comment?.comment }</p>
                                 <div className="text-gray-400 text-[16px] font-bold">
                                     <button className="mr-[10px]">Trả lời</button>
-                                    { user?._id === comment.User._id && (
+                                    { user?._id === comment?.User._id && (
                                         <div className="inline-block">
-                                            { selectInputCommentId === comment._id && openUpdateComment ? (
+                                            { selectInputCommentId === comment?._id && openUpdateComment ? (
                                                 <div className="mb-[20px] relative">
                                                     <form action="" className="inline-block" onSubmit={ UpdateCommentFormSubmit } >
                                                         <textarea className="w-full rounded border-[3px] border-black h-[80px]" value={ valueUpdateComment } onChange={ handleChangeValueTextArena }  ></textarea>
@@ -109,9 +110,9 @@ const Comment = () => {
                                                     <button className="absolute top-[86px] left-[90px] border border-black rounded text-[15px] px-[7px] py-[5px] inline-block mt-[10px] bg-blue-500 text-white " onClick={ () => setOpenUpdateComment(false) }>Hủy</button>
                                                 </div>
                                             ) : (
-                                                <button className="mr-[10px]" onClick={ () => showFormUpdate(comment._id) }>Chỉnh Sửa</button>
+                                                <button className="mr-[10px]" onClick={ () => showFormUpdate(comment?._id) }>Chỉnh Sửa</button>
                                             ) }
-                                            <button className="" onClick={ () => deleteComment(comment._id) }>Xóa</button>
+                                            <button className="" onClick={ () => deleteComment(comment?._id) }>Xóa</button>
                                         </div>
                                     ) }
                                 </div>
