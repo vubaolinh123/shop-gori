@@ -22,12 +22,12 @@ import Page404 from './pages/404/Page404'
 import { PrivateRouter, PrivateRouterUser } from './components/PrivateRoutes'
 import Bill from './components/Admin/Bill/Bill'
 import DetailBill from './components/Admin/Bill/DetailBill'
-import InfoUser from "./components/User/InfoUser"
 import DetailBillUser from './components/User/DetailBillUser'
 import User from './components/Admin/User/User'
 import UserComment from './components/Admin/User/UserComment'
 import Voucher from './components/Admin/Voucher/Voucher'
 import AddVoucher from './components/Admin/Voucher/AddVoucher'
+import InfoUser from "./components/User/infoUser"
 
 
 function App() {
@@ -43,7 +43,7 @@ function App() {
             <Route path="category/:id" element={ <ProInCate /> }></Route>
             <Route path="register" element={ <Register /> }></Route>
             <Route path="cart" element={ <Cart /> }></Route>
-            <Route path="user/:id" element={ <PrivateRouterUser><InfoUser /></PrivateRouterUser> }></Route>
+            <Route path="user/:id" element={ <PrivateRouterUser> <InfoUser></InfoUser> </PrivateRouterUser> }></Route>
             <Route path="user/:id/detail" element={ <PrivateRouterUser><DetailBillUser /></PrivateRouterUser> }></Route>
           </Route>
           <Route path="checkout" element={ <CheckOut /> }></Route>
