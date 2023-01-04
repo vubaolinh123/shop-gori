@@ -10,7 +10,6 @@ const ContainerHome = () => {
         <>
             <Collection />
             <SeasonHome />
-            <Hoodie />
         </>
     )
 }
