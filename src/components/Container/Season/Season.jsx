@@ -11,9 +11,8 @@ const SeasonHome = () => {
 
 
     useEffect(() => {
-        const idCategorySesson = "624ada6aa3b1c3dd3e9c6a21"
+        const idCategorySesson = "639b0a0135afa83bfe42f963"
         dispatch(getProductInCategory(idCategorySesson))
-
     }, [])
     return (
         <>

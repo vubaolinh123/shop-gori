@@ -12,7 +12,7 @@ const Hoodie = () => {
 
 
     useEffect(() => {
-        const idCategoryHoodie = "624ada75a3b1c3dd3e9c6a23"
+        const idCategoryHoodie = "639b0a0735afa83bfe42f966"
         dispatch(getProductInCategory(idCategoryHoodie))
 
     }, [])
