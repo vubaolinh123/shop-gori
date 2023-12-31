@@ -33,7 +33,7 @@ import InfoUser from "./components/User/infoUser"
 function App() {
   return (
     <>
-      <div className="container">
+      <div className="container m-auto">
         <Routes>
           <Route path="/" element={ <WebsiteLayout /> }>
             <Route index element={ <Homepage /> }></Route>
